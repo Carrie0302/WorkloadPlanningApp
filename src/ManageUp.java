@@ -28,7 +28,7 @@ public class ManageUp extends JFrame {
 
 	public Connection m_conn = null;
 	private static final String DB_URL = "jdbc:mysql://cssql.seattleu.edu:3306/mm_sttest5b";
-	private static final String DB_DRV = "com.mysql.jdbc.Driver";  // "com.mysql.cj.jdbc.Driver";
+	private static final String DB_DRV = "com.mysql.cj.jdbc.Driver";
 	private String m_error = "";
 	private ArrayList<String> m_resultList;
 	private int m_columnCount = 0;
