@@ -1,4 +1,4 @@
 # ManageUpMilestone3
 
 Team Members:
-Carrie Schaden, Tong Ding
+Carrie Schaden, Tong Ding, Yi Niu
