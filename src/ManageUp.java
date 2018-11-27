@@ -1,8 +1,12 @@
+package manage;
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -22,260 +26,310 @@ import java.awt.SystemColor;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 import java.awt.Font;
-
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 
 public class ManageUp extends JFrame {
 
-	public Connection m_conn = null;
-	private static final String DB_URL = "jdbc:mysql://localhost:3306/voterelection";
-	private static final String DB_DRV = "com.mysql.jdbc.Driver";  // "com.mysql.cj.jdbc.Driver";
-	private String m_error = "";
-	private ArrayList<String> m_resultList;
-	private int m_columnCount = 0;
-	private int m_rows = 0;
+   // cssql.seattleu.edu:3306/mm_sttest5b
+   // localhost:3306/mm_sttest5b
+   public Connection m_conn = null;
+   private static final String DB_URL =
+   "jdbc:mysql://cssql.seattleu.edu:3306/mm_sttest5b?serverTimezone=America/Los_Angeles&amp&dummyparam=";
+   private static final String DB_DRV = "com.mysql.cj.jdbc.Driver"; // "com.mysql.cj.jdbc.Driver";
+   private String m_error = "";
+   private ArrayList<String> m_resultList;
+   private int m_columnCount = 0;
+   private int m_rows = 0;
 
-	private JPanel contentPane;
-	private JPanel panel_login;
-	private JTextField userName;
-	private Button db_connect_button;
-	private JLabel lblPassword;
-	private JLabel lblUserName;
-	private JPanel panel_employees;
-	private JPanel panel_welcome;
-	private JLabel lbImageHomePage;
-	private JPasswordField passWord;
-	private JLabel lblWelcome;
-	private String user;
-	private JLabel labelLogo;
-	private JPanel panel_pm_overview;
-	
-	/**
-	 * Create the initial frame.
-	 */
-	public ManageUp() {
-		setBackground(Color.WHITE);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1118, 723);
-		initContentPane();
-		initPanelLogIn();
-		initUserNameAndPassword();
-		initWelcomeLogo();
-		initImageHomePage();
-		initEmployeePanel();
-		initPMOverviewPanel();
-	}
+   private JPanel contentPane;
+   private JPanel panel_login;
+   private JTextField userName;
+   private Button db_connect_button;
+   private JLabel lblPassword;
+   private JLabel lblUserName;
+   private JPanel panel_menu;
+   private JPanel panel_welcome;
+   private JLabel lbImageHomePage;
+   private JPasswordField passWord;
+   private JLabel lblWelcome;
+   private String user;
+   private JLabel labelLogo;
+   private JPanel panel_pm_overview;
+   private final SwingAction_1 nav_skillsassementpanel = new SwingAction_1(m_conn);
 
-	
-	public JPanel getPanel() {
-		return panel_login;
-	}
-	
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ManageUp frame = new ManageUp();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+   /**
+    * Create the initial frame.
+    */
+   public ManageUp() {
+      setBackground(Color.WHITE);
+      setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      setBounds(100, 100, 1118, 723);
+      initContentPane();
+      initPanelLogIn();
+      initUserNameAndPassword();
+      initWelcomeLogo();
+      initImageHomePage();
+      initEmployeePanel();
+      initPMOverviewPanel();
+   }
 
+   public JPanel getPanel() {
+      return panel_login;
+   }
 
-	/**
-	 * Creates connection to database
-	 * 
-	 * @return
-	 */
-	public int ConnectToDatabase() {
-		try {
-			if( checkUserNameAndPassword() ) {
-				Class.forName("com.mysql.jdbc.Driver").newInstance();
-				user = userName.getText();
-				String pwd = passWord.getText();
-				m_conn = DriverManager.getConnection(DB_URL, user, pwd);
-			}
-		} catch (SQLException ex) {
-			m_error = "SQLException: " + ex.getMessage();
-			System.out.println("SQLException: " + ex.getMessage());
-			System.out.println("SQLState: " + ex.getSQLState());
-			System.out.println("VendorError: " + ex.getErrorCode());
-			return 0;
-		} catch (Exception ex) {
-			System.out.println("Error was " + ex.toString());
-			return 0;
-		}
-		return 1;
-	}
-	
-	
-	
-	/**
-	 * Closes database connection
-	 * 
-	 * @return
-	 */
-	public int CloseDatabase() {
-		try {
-			m_conn.close();
-			user = "";
-			
-		} catch (SQLException ex) {
-			System.out.println("SQLException: " + ex.getMessage());
-			System.out.println("SQLState: " + ex.getSQLState());
-			System.out.println("VendorError: " + ex.getErrorCode());
-		} catch (Exception ex) {
-			// handle the error
-			System.out.println("Error was " + ex.toString());
-		}
-		return 1;
-	}
+   /**
+    * Launch the application.
+    */
+   public static void main(String[] args) {
+      EventQueue.invokeLater(new Runnable() {
+         public void run() {
+            try {
+               ManageUp frame = new ManageUp();
+               frame.setVisible(true);
+            } catch (Exception e) {
+               e.printStackTrace();
+            }
+         }
+      });
+   }
 
-	
-	private void initContentPane() {
-		contentPane = new JPanel();
-		contentPane.setBackground(UIManager.getColor("TabbedPane.background"));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-	}
-	
-	private void initPanelLogIn() {
-		panel_login = new JPanel();
-		panel_login.setBounds(0, 0, 321, 693);
-		panel_login.setBackground(UIManager.getColor("SplitPaneDivider.draggingColor"));
-		contentPane.add(panel_login);
-		panel_login.setLayout(null);
-	}
-	
-	private void initUserNameAndPassword() {
-		userName = new JTextField();
-		userName.setBounds(24, 48, 268, 35);
-		panel_login.add(userName);
-		userName.setColumns(10);
+   /**
+    * Creates connection to database
+    * 
+    * @return
+    */
+   public int ConnectToDatabase() {
+      try {
+         if (checkUserNameAndPassword()) {
+            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+            user = userName.getText();
+            String pwd = passWord.getText();
+            m_conn = DriverManager.getConnection(DB_URL, user, pwd);
+            nav_skillsassementpanel.setConnection(m_conn);
+         }
+      } catch (SQLException ex) {
+         m_error = "SQLException: " + ex.getMessage();
+         System.out.println("SQLException: " + ex.getMessage());
+         System.out.println("SQLState: " + ex.getSQLState());
+         System.out.println("VendorError: " + ex.getErrorCode());
+         return 0;
+      } catch (Exception ex) {
+         System.out.println("Error was " + ex.toString());
+         return 0;
+      }
+      return 1;
+   }
 
-		db_connect_button = new Button("Connect");
-		db_connect_button.setBounds(24, 164, 143, 35);
-		panel_login.add(db_connect_button);
-		db_connect_button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				dbConnectButtonActionPerformed(evt);
-			}
-		});
-		db_connect_button.setForeground(UIManager.getColor("Panel.background"));
-		db_connect_button.setBackground(UIManager.getColor("RadioButtonMenuItem.acceleratorForeground"));
-		
-		passWord = new JPasswordField();
-		passWord.setColumns(10);
-		passWord.setBounds(24, 112, 268, 35);
-		panel_login.add(passWord);
-		
-		lblUserName = new JLabel("User Name");
-		lblUserName.setForeground(UIManager.getColor("SplitPane.highlight"));
-		lblUserName.setBounds(35, 25, 113, 15);
-		panel_login.add(lblUserName);
-		
-		lblPassword = new JLabel("Password");
-		lblPassword.setForeground(UIManager.getColor("SplitPane.highlight"));
-		lblPassword.setBounds(34, 87, 102, 23);
-		panel_login.add(lblPassword);
-	}
-	
+   /**
+    * Closes database connection
+    * 
+    * @return
+    */
+   public int CloseDatabase() {
+      try {
+         m_conn.close();
+         user = "";
 
-	private void initWelcomeLogo() {
-		lblWelcome = new JLabel("");
-		lblWelcome.setFont(new Font("Dialog", Font.BOLD, 14));
-		lblWelcome.setForeground(UIManager.getColor("controlLtHighlight"));
-		lblWelcome.setBounds(35, 112, 257, 15);
-		panel_login.add(lblWelcome);
-		
-		labelLogo = new JLabel("");
-		labelLogo.setIcon(new ImageIcon(ManageUp.class.getResource("/image/logodark_small.png")));
-		labelLogo.setBounds(24, 12, 280, 107);
-		
-		panel_welcome = new JPanel();
-		panel_welcome.setBackground(UIManager.getColor("Tree.textBackground"));
-		panel_welcome.setBounds(319, -5, 799, 697);
-		contentPane.add(panel_welcome);
-	}
-	
-	private void initImageHomePage() {
-		lbImageHomePage = new JLabel("");
-		lbImageHomePage.setIcon(new ImageIcon(ManageUp.class.getResource("/image/homepage_7by6v2.png")));
-		panel_welcome.add(lbImageHomePage);
-	}
-	
+      } catch (SQLException ex) {
+         System.out.println("SQLException: " + ex.getMessage());
+         System.out.println("SQLState: " + ex.getSQLState());
+         System.out.println("VendorError: " + ex.getErrorCode());
+      } catch (Exception ex) {
+         // handle the error
+         System.out.println("Error was " + ex.toString());
+      }
+      return 1;
+   }
 
-	private void initPMOverviewPanel() {		
-		panel_pm_overview = new JPanel();
-		panel_pm_overview.setBackground(new java.awt.Color(220,186,196));
-		panel_pm_overview.setBounds(319, 0, 799, 693);
-		contentPane.add(panel_pm_overview);
-	}
-	
-	private void initEmployeePanel() {
-		panel_employees = new JPanel();
-		panel_employees.setBackground( new java.awt.Color(192, 249, 233));
-		panel_employees.setBounds(319, 0, 799, 693);
-		contentPane.add(panel_employees);
-	}
-	
-	
-	/**
-	 * When the db connection button is clicked it will call the code to connect to
-	 * the database
-	 * 
-	 * @param evt
-	 */
-	private void dbConnectButtonActionPerformed(java.awt.event.ActionEvent evt) {
-		int nValue = 0;
-		if (db_connect_button.getLabel() == "Connect") {
-			nValue = this.ConnectToDatabase();
-			
-			if (nValue == 1) {
-				db_connect_button.setLabel("Disconnect");
-				panel_welcome.hide();
-				lblPassword.hide();
-				lblUserName.hide();
-				userName.hide();
-				passWord.hide();
-				lblWelcome.setText("Welcome " + user);
-				panel_login.add(labelLogo);
-			}
-		} else {
-			nValue = this.CloseDatabase();
-			if (nValue == 1) {
-				db_connect_button.setLabel("Connect");
-				lblWelcome.hide();
-				panel_login.remove(labelLogo);
-				panel_welcome.show();
-				lblPassword.show();
-				lblUserName.show();
-				userName.show();
-				passWord.show();
-				
-			}
-		}
-	}
-	
-	
-	/**
-	 * Checks the user name and password
-	 * @return
-	 */
-	private boolean checkUserNameAndPassword() {
-		String user = userName.getText();
-		String pwd = passWord.getText();
-		if( user == ""  ||  pwd == "" ) {
-			throw new IllegalArgumentException("You need to enter a password");
-		}
-		
-		//TODO: More rigorous checks for user name and password
-		return true;
-	}
+   private void initContentPane() {
+      contentPane = new JPanel();
+      contentPane.setBackground(UIManager.getColor("TabbedPane.background"));
+      contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+      setContentPane(contentPane);
+      contentPane.setLayout(null);
+   }
+
+   private void initPanelLogIn() {
+      panel_menu = new JPanel();
+      panel_menu.setBackground(new java.awt.Color(192, 249, 233));
+      panel_menu.setBounds(319, 0, 799, 693);
+      contentPane.add(panel_menu);
+      
+      JButton btnSkillsAssesReport = new JButton("Skills Assesment report");
+      btnSkillsAssesReport.setAction(nav_skillsassementpanel);
+      panel_menu.add(btnSkillsAssesReport);
+     
+            panel_welcome = new JPanel();
+            panel_welcome.setBackground(UIManager.getColor("Tree.textBackground"));
+            panel_welcome.setBounds(319, -5, 799, 697);
+            contentPane.add(panel_welcome);
+            lbImageHomePage = new JLabel("");
+            lbImageHomePage.setIcon(new ImageIcon(
+            ManageUp.class.getResource("/image/homepage_7by6v2.png")));
+            panel_welcome.add(lbImageHomePage);
+      panel_login = new JPanel();
+      panel_login.setBounds(0, 0, 321, 693);
+      panel_login
+      .setBackground(UIManager.getColor("SplitPaneDivider.draggingColor"));
+      contentPane.add(panel_login);
+      panel_login.setLayout(null);
+   }
+
+   private void initUserNameAndPassword() {
+      userName = new JTextField();
+      userName.setBounds(24, 48, 268, 35);
+      panel_login.add(userName);
+      userName.setColumns(10);
+
+      db_connect_button = new Button("Connect");
+      db_connect_button.setBounds(24, 164, 143, 35);
+      panel_login.add(db_connect_button);
+      db_connect_button.addActionListener(new ActionListener() {
+         public void actionPerformed(ActionEvent evt) {
+            dbConnectButtonActionPerformed(evt);
+         }
+      });
+      db_connect_button.setForeground(UIManager.getColor("Panel.background"));
+      db_connect_button.setBackground(
+      UIManager.getColor("RadioButtonMenuItem.acceleratorForeground"));
+
+      passWord = new JPasswordField();
+      passWord.setColumns(10);
+      passWord.setBounds(24, 112, 268, 35);
+      panel_login.add(passWord);
+
+      lblUserName = new JLabel("User Name");
+      lblUserName.setForeground(UIManager.getColor("SplitPane.highlight"));
+      lblUserName.setBounds(35, 25, 113, 15);
+      panel_login.add(lblUserName);
+
+      lblPassword = new JLabel("Password");
+      lblPassword.setForeground(UIManager.getColor("SplitPane.highlight"));
+      lblPassword.setBounds(34, 87, 102, 23);
+      panel_login.add(lblPassword);
+   }
+
+   private void initWelcomeLogo() {
+      lblWelcome = new JLabel("");
+      lblWelcome.setFont(new Font("Dialog", Font.BOLD, 14));
+      lblWelcome.setForeground(UIManager.getColor("controlLtHighlight"));
+      lblWelcome.setBounds(35, 112, 257, 15);
+      panel_login.add(lblWelcome);
+
+      labelLogo = new JLabel("");
+      labelLogo.setIcon(
+      new ImageIcon(ManageUp.class.getResource("/image/logodark_small.png")));
+      labelLogo.setBounds(24, 12, 280, 107);
+   }
+
+   private void initImageHomePage() {
+   }
+
+   private void initPMOverviewPanel() {
+      panel_pm_overview = new JPanel();
+      panel_pm_overview.setBackground(new java.awt.Color(220, 186, 196));
+      panel_pm_overview.setBounds(319, 0, 799, 693);
+      contentPane.add(panel_pm_overview);
+   }
+
+   private void initEmployeePanel() {
+   }
+
+   /**
+    * When the db connection button is clicked it will call the code to
+    * connect to the database
+    * 
+    * @param evt
+    */
+   private void
+   dbConnectButtonActionPerformed(java.awt.event.ActionEvent evt) {
+      int nValue = 0;
+      if (db_connect_button.getLabel() == "Connect") {
+         nValue = this.ConnectToDatabase();
+
+         if (nValue == 1) {
+            db_connect_button.setLabel("Disconnect");
+            panel_welcome.hide();
+            lblPassword.hide();
+            lblUserName.hide();
+            userName.hide();
+            passWord.hide();
+            lblWelcome.setText("Welcome " + user);
+            panel_login.add(labelLogo);
+         }
+      } else {
+         nValue = this.CloseDatabase();
+         if (nValue == 1) {
+            db_connect_button.setLabel("Connect");
+            lblWelcome.hide();
+            panel_login.remove(labelLogo);
+            panel_welcome.show();
+            lblPassword.show();
+            lblUserName.show();
+            userName.show();
+            passWord.show();
+
+         }
+      }
+   }
+
+   /**
+    * Checks the user name and password
+    * 
+    * @return
+    */
+   private boolean checkUserNameAndPassword() {
+      String user = userName.getText();
+      String pwd = passWord.getText();
+      if (user == "" || pwd == "") {
+         throw new IllegalArgumentException("You need to enter a password");
+      }
+
+      // TODO: More rigorous checks for user name and password
+      return true;
+   }
+   // Get Skills
+   private class SwingAction_1 extends AbstractAction {
+      private Connection m_conn;
+      public SwingAction_1(Connection m_conn) {
+         this.m_conn = m_conn;
+         putValue(NAME, "SwingAction_1");
+         putValue(SHORT_DESCRIPTION, "Some short description");
+      }
+      public void setConnection (Connection c) {
+         this.m_conn = c;
+      }
+      public void actionPerformed(ActionEvent e) {
+         Statement statement = null;
+         ResultSet resultSet = null;
+         try
+         {
+             statement=this.m_conn.createStatement();
+             resultSet=statement.executeQuery
+                 
+                ("SELECT * FROM mm_sttest5b.Skills");
+
+             while(resultSet.next()){
+                System.out.printf("%s\t%s\t%s\t%s\n",
+                resultSet.getString(1),
+                resultSet.getString(2),
+                resultSet.getString(3),
+                resultSet.getString(4));                 
+//                resultSet.getFloat(4));
+             }       
+             
+             statement.close();
+             resultSet.close();            
+         }
+
+         catch (SQLException ex) 
+         {
+             System.out.println("SQLException: " + ex.getMessage());
+             System.out.println("SQLState: " + ex.getSQLState());
+             System.out.println("VendorError: " + ex.getErrorCode());
+         }          
+       
+      }
+   }
 }
