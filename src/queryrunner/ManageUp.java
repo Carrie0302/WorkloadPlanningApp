@@ -343,14 +343,6 @@ public class ManageUp extends JFrame {
 		passWord.setColumns(10);
 		passWord.setBounds(24, 112, 268, 35);
 		panelLogin.add(passWord);
-
-//		JLabel lblNewLabel = new JLabel("Hello!");
-//		Icon icon = IconFontSwing.buildIcon(FontAwesome.WRENCH, 18, whiteMU);
-//		lblNewLabel.setIcon(icon);
-//		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 16));
-//		lblNewLabel.setForeground( whiteMU );		
-//		lblNewLabel.setBounds(35, 244, 257, 50);
-//		panelLogin.add(lblNewLabel);
 	}
 
 	// Action for CheckProject button

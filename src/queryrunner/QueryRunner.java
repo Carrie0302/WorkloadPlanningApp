@@ -1,7 +1,7 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Team 5
+ * CPSC 5021, Seattle University
+ * This is free and unencumbered software released into the public domain.
  */
 package queryrunner;
 
@@ -90,34 +90,9 @@ public class QueryRunner {
 		updateAmount = 0;
 		queryArray = new ArrayList<>();
 		error = "";
-		this.projectTeamApplication = "ManageUp"; 
-		
-		// Each row that is added to queryArray is a separate query. It does not work
-		// on Stored procedure calls.
-		// The 'new' Java keyword is a way of initializing the data that will be added
-		// to QueryArray. Please do not change
-		// Format for each row of queryArray is: (QueryText, ParamaterLabelArray[],
-		// LikeParameterArray[], IsItActionQuery, IsItParameterQuery)
-
-		// QueryText is a String that represents your query. It can be anything but
-		// Stored Procedure
-		// Parameter Label Array (e.g. Put in null if there is no Parameters in your
-		// query, otherwise put in the Parameter Names)
-		// LikeParameter Array is an array I regret having to add, but it is necessary
-		// to tell QueryRunner which parameter has a LIKE Clause. If you have no
-		// parameters, put in null. Otherwise put in false for parameters that don't use
-		// 'like' and true for ones that do.
-		// IsItActionQuery (e.g. Mark it true if it is, otherwise false)
-		// IsItParameterQuery (e.g.Mark it true if it is, otherwise false)
-		
 		expertsQuery();
 		top5SkillsQuery();
 		recentSkillUpdatesebyPMQuery();
-
-//		queryArray.add(new QueryData("insert into contact (contact_id, contact_name, contact_salary) values (?,?,?)",
-//				new String[] { "CONTACT_ID", "CONTACT_NAME", "CONTACT_SALARY" }, new boolean[] { false, false, false },
-//				true, true));// THIS NEEDS TO CHANGE FOR YOUR APPLICATION
-
 	}
 
 	public int GetTotalQueries() {
@@ -134,18 +109,12 @@ public class QueryRunner {
 		return e.GetParamText(parmnum);
 	}
 
-	public String GetQueryText(int queryChoice) {
-		QueryData e = queryArray.get(queryChoice);
-		return e.GetQueryString();
-	}
-
 	/**
 	 * Function will return how many rows were updated as a result of the update
 	 * query
 	 * 
 	 * @return Returns how many rows were updated
 	 */
-
 	public int GetUpdateAmount() {
 		return updateAmount;
 	}
@@ -170,11 +139,7 @@ public class QueryRunner {
 	public String[][] GetQueryData() {
 		return jdbcData.GetData();
 	}
-
-	public String GetProjectTeamApplication() {
-		return projectTeamApplication;
-	}
-
+	
 	public boolean isActionQuery(int queryChoice) {
 		QueryData e = queryArray.get(queryChoice);
 		return e.IsQueryAction();
@@ -201,7 +166,6 @@ public class QueryRunner {
 	}
 
 	public boolean Connect(String szHost, String szUser, String szPass, String szDatabase) {
-
 		boolean bConnect = jdbcData.ConnectToDatabase(szHost, szUser, szPass, szDatabase);
 		if (bConnect == false)
 			error = jdbcData.GetError();
@@ -209,7 +173,6 @@ public class QueryRunner {
 	}
 
 	public boolean Disconnect() {
-		// Disconnect the JDBCData Object
 		boolean bConnect = jdbcData.CloseDatabase();
 		if (bConnect == false)
 			error = jdbcData.GetError();
@@ -222,83 +185,18 @@ public class QueryRunner {
 
 	private QueryJDBC jdbcData;
 	private String error;
-	private String projectTeamApplication;
 	private ArrayList<QueryData> queryArray;
 	private int updateAmount;
 
 	/**
 	 * @param args the command line arguments
 	 */
-
-	// Console App will Connect to Database
-	// It will run a single select query without Parameters
-	// It will display the results
-	// It will close the database session
 	public static void main(String[] args) {
-		// TODO code application logic here
 		final QueryRunner queryrunner = new QueryRunner();
-
-		if (args.length == 0) {
-			java.awt.EventQueue.invokeLater(new Runnable() {
-				public void run() {
-
-					new ManageUp(queryrunner).setVisible(true);
-				}
-			});
-		} else {
-			if (args[0] == "-console") {
-				// TODO
-				// You should code the following functionality:
-
-				// You need to determine if it is a parameter query. If it is, then
-				// you will need to ask the user to put in the values for the Parameters in your
-				// query
-				// you will then call ExecuteQuery or ExecuteUpdate (depending on whether it is
-				// an action query or regular query)
-				// if it is a regular query, you should then get the data by calling
-				// GetQueryData. You should then display this
-				// output.
-				// If it is an action query, you will tell how many row's were affected by it.
-				//
-				// This is Psuedo Code for the task:
-				// Connect()
-				// n = GetTotalQueries()
-				// for (i=0;i < n; i++)
-				// {
-				// Is it a query that Has Parameters
-				// Then
-				// amt = find out how many parameters it has
-				// Create a paramter array of strings for that amount
-				// for (j=0; j< amt; j++)
-				// Get The Paramater Label for Query and print it to console. Ask the user to
-				// enter a value
-				// Take the value you got and put it into your parameter array
-				// If it is an Action Query then
-				// call ExecuteUpdate to run the Query
-				// call GetUpdateAmount to find out how many rows were affected, and print that
-				// value
-				// else
-				// call ExecuteQuery
-				// call GetQueryData to get the results back
-				// print out all the results
-				// end if
-				// }
-				// Disconnect()
-
-				// NOTE - IF THERE ARE ANY ERRORS, please print the Error output
-				// NOTE - The QueryRunner functions call the various JDBC Functions that are in
-				// QueryJDBC. If you would rather code JDBC
-				// functions directly, you can choose to do that. It will be harder, but that is
-				// your option.
-				// NOTE - You can look at the QueryRunner API calls that are in QueryFrame.java
-				// for assistance. You should not have to
-				// alter any code in QueryJDBC, QueryData, or QueryFrame to make this work.
-				System.out.println("Please write the non-gui functionality");
-			} else {
-				System.out.println(
-						"usage: you must use -console as your argument to get non-gui functionality. If you leave it out it will be GUI");
+		java.awt.EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				new ManageUp(queryrunner).setVisible(true);
 			}
-		}
-
+		});
 	}
 }

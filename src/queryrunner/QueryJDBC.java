@@ -59,18 +59,14 @@ public class QueryJDBC {
 		boolean bOK = true;
 		// Try to get the columns and the amount of columns
 		try {
-
 			preparedStatement = this.m_conn.prepareStatement(szQuery);
-
 			int nParamAmount = parms.length;
-
 			for (int i = 0; i < nParamAmount; i++) {
 				String parm = parms[i];
 				if (likeparms[i] == true) {
 					parm += "%";
 				}
 				preparedStatement.setString(i + 1, parm);
-
 			}
 			// preparedStatement.setString(1, "%" + szContact + "%");
 			resultSet = preparedStatement.executeQuery();
@@ -157,7 +153,6 @@ public class QueryJDBC {
 
 	public boolean ConnectToDatabase(String host, String user, String pass, String database) {
 		String url;
-		
 		url = "jdbc:mysql://";
 		url += host;
 		url += ":3306/";

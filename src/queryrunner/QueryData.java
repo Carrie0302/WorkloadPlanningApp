@@ -13,12 +13,7 @@ import java.util.ArrayList;
  */
 public class QueryData {
 	
-	/**
-	 * Instantiates a new query data.
-	 */
-	QueryData() {
-	}
-
+	
 	/**
 	 * Instantiates a new query data.
 	 *
