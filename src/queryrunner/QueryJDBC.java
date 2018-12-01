@@ -158,9 +158,6 @@ public class QueryJDBC {
 	public boolean ConnectToDatabase(String host, String user, String pass, String database) {
 		String url;
 		
-		user = "mm_sttest5b";
-		pass = "mm_sttest5bPass";
-		
 		url = "jdbc:mysql://";
 		url += host;
 		url += ":3306/";

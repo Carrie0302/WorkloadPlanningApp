@@ -3,7 +3,6 @@
  * CPSC 5021, Seattle University
  * This is free and unencumbered software released into the public domain.
  */
-
 package queryrunner;
 import java.awt.BorderLayout;
 import java.awt.Button;
@@ -11,7 +10,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -100,9 +98,12 @@ public class ManageUp extends JFrame {
 
 		// Project Status Report Button
 		btnCheckProjects = new JButton("Project Status");
+		btnCheckSkills = new JButton("Skill Assessment");
+		btnAbout = new JButton("About");
+		btnNavigation = new JButton[] { btnCheckProjects, btnCheckSkills, btnAbout };
+		
 		Icon iconProject = IconFontSwing.buildIcon(FontAwesome.CALENDAR_CHECK_O, 15, whiteMU);
 		btnCheckProjects.setIcon(iconProject);
-		
 		btnCheckProjects.setVisible(false);
 		btnCheckProjects.setFont(new Font("Lucida Grande", Font.BOLD, 14));
 		btnCheckProjects.setBackground(greyMU);
@@ -114,16 +115,13 @@ public class ManageUp extends JFrame {
 		btnCheckProjects.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				showPanelPM(evt);
-				
-				//System.out.println( btnCheckProjects.getBackground().toString());
+				changeBackgroundColorClick(btnCheckProjects);
 			}
 		});
 
 		// Skill Assessment Report Button
-		btnCheckSkills = new JButton("Skill Assessment");
 		Icon iconWrench = IconFontSwing.buildIcon(FontAwesome.WRENCH, 15, whiteMU);
 		btnCheckSkills.setIcon(iconWrench);
-		
 		btnCheckSkills.setVisible(false);
 		btnCheckSkills.setFont(new Font("Lucida Grande", Font.BOLD, 14));
 		btnCheckSkills.setBackground(greyMU);
@@ -137,11 +135,11 @@ public class ManageUp extends JFrame {
 		btnCheckSkills.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				showPanelSkills(evt);
+				changeBackgroundColorClick(btnCheckSkills);
 			}
 		});
 
 		// About Button
-		btnAbout = new JButton("About");
 		Icon iconAbout = IconFontSwing.buildIcon(FontAwesome.WRENCH, 15, whiteMU);
 		btnAbout.setIcon(iconAbout);
 		btnAbout.setVisible(false);
@@ -154,6 +152,7 @@ public class ManageUp extends JFrame {
 		btnAbout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				//TODO : show about panel
+				changeBackgroundColorClick(btnAbout);
 			}
 		});
 		panelLogin.add(btnAbout);
@@ -174,6 +173,21 @@ public class ManageUp extends JFrame {
 		textFieldEntry2.setVisible(false);
 	}
 
+	
+	private void changeBackgroundColorClick(JButton btn) {
+		Color currentColor = btn.getBackground();
+		if( currentColor == greyMU ) {
+			for( int i=0; i < btnNavigation.length; i++) {
+				btnNavigation[i].setBackground(greyMU);
+			}
+			btn.setBackground(blueMU);
+		}
+		else {
+			btn.setBackground(greyMU);
+		}
+	}
+	
+	
 	// Initialize Home page
 	private void initPanels() {
 		IconFontSwing.register(FontAwesome.getIconFont());
@@ -547,6 +561,7 @@ public class ManageUp extends JFrame {
 	private JButton btnCheckProjects;
 	private JButton btnCheckSkills;
 	private JButton btnAbout;
+	private JButton[] btnNavigation;
 	
 	/*
 	 * Database Queries
