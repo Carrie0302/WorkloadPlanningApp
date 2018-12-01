@@ -301,7 +301,7 @@ public class ManageUp extends JFrame {
 	private void expertSkillsQueryActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_expertSkillsQueryActionPerformed
 		m_queryChoice = 1;
 		String[] parameters = new String[1];
-		parameters[0] = textFieldEntry1.getText();
+		parameters[0] = "%" + textFieldEntry1.getText() + "%";
 		executeSkillQuery( m_queryChoice, parameters );
 	}// GEN-LAST:event_expertSkillsQueryActionPerformed
 
