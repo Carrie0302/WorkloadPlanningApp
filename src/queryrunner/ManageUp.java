@@ -1,5 +1,10 @@
-package queryrunner;
+/*
+ * Team 5
+ * CPSC 5021, Seattle University
+ * This is free and unencumbered software released into the public domain.
+ */
 
+package queryrunner;
 import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Color;
@@ -257,6 +262,7 @@ public class ManageUp extends JFrame {
 		String pwd = passWord.getText();
 		String db = "mm_sttest5b";
 		user = userName.getText();
+		System.out.println("Try to connect");
 		
 		if (btnDBConnect.getLabel() == "Connect") {
 			bOK = queryrunner.Connect( host , user, pwd, db);

@@ -1,22 +1,15 @@
 /*
- * Carrie Schaden
- * CPSC 5011, Seattle University
+ * Team 5
+ * CPSC 5021, Seattle University
  * This is free and unencumbered software released into the public domain.
  */
 package queryrunner;
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 import java.util.ArrayList;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class QueryData.
+ * The Class QueryData creates query objects with the associated parameters.
  *
- * @author mckeem
+ * @author mckeem, carrie
  */
 public class QueryData {
 	
@@ -36,11 +29,11 @@ public class QueryData {
 	 * @param isParm the is parm
 	 */
 	QueryData(String query, String[] parms, boolean[] likeparms, boolean isAction, boolean isParm) {
-		m_queryString = query;
-		m_arrayParms = parms;
-		m_arrayLikeParms = likeparms;
-		m_isAction = isAction;
-		m_isParms = isParm;
+		this.queryString = query;
+		this.arrayParms = parms;
+		this.arrayLikeParms = likeparms;
+		this.isAction = isAction;
+		this.isParms = isParm;
 	}
 
 	/**
@@ -49,80 +42,80 @@ public class QueryData {
 	 * @return the string
 	 */
 	String GetQueryString() {
-		return m_queryString;
+		return queryString;
 	}
 
 	/**
-	 * Gets the parm amount.
+	 * Gets the amount of parameters.
 	 *
-	 * @return the int
+	 * @return the parameters
 	 */
 	int GetParmAmount() {
-		if (m_arrayParms == null)
+		if (arrayParms == null)
 			return 0;
 		else
-			return m_arrayParms.length;
+			return arrayParms.length;
 	}
 
 	/**
-	 * Gets the param text.
+	 * Gets the parameters text.
 	 *
 	 * @param index the index
 	 * @return the string
 	 */
 	String GetParamText(int index) {
-		return m_arrayParms[index];
+		return arrayParms[index];
 	}
 
 	/**
-	 * Gets the like param.
+	 * Gets the like parameters.
 	 *
 	 * @param index the index
 	 * @return true, if successful
 	 */
 	boolean GetLikeParam(int index) {
-		return m_arrayLikeParms[index];
+		return arrayLikeParms[index];
 	}
 
 	/**
-	 * Gets the all like params.
+	 * Gets the all parameters that use like.
 	 *
 	 * @return the boolean[]
 	 */
 	boolean[] GetAllLikeParams() {
-		return m_arrayLikeParms;
+		return arrayLikeParms;
 	}
 
 	/**
-	 * Checks if is query action.
+	 * Checks if it is a query action.
 	 *
-	 * @return true, if successful
+	 * @return true, if query is an action
 	 */
 	boolean IsQueryAction() {
-		return m_isAction;
+		return isAction;
 	}
 
 	/**
-	 * Checks if is query parm.
+	 * Checks if is query parameter.
 	 *
-	 * @return true, if successful
+	 * @return true, if it contains parameters
 	 */
 	boolean IsQueryParm() {
-		return m_isParms;
+		return isParms;
 	}
 
-	/** The m query string. */
-	private String m_queryString;
+	/** The query string. */
+	private String queryString;
 	
-	/** The m array parms. */
-	private String[] m_arrayParms;
+	/** The array of all parameters. */
+	private String[] arrayParms;
 	
-	/** The m is action. */
-	private boolean m_isAction;
+	/** Is it a action. */
+	private boolean isAction;
 	
-	/** The m is parms. */
-	private boolean m_isParms;
+	/** Does it have parameters */
+	private boolean isParms;
 	
-	/** The m array like parms. */
-	private boolean[] m_arrayLikeParms;
+	/** The array contains like parameters */
+	private boolean[] arrayLikeParms;
 }

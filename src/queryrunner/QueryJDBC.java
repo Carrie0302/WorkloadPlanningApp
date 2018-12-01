@@ -1,7 +1,7 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Team 5
+ * CPSC 5021, Seattle University
+ * This is free and unencumbered software released into the public domain.
  */
 package queryrunner;
 
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author mckeem
+ * @author mckeem, carrie
  */
 
 public class QueryJDBC {
@@ -125,15 +125,12 @@ public class QueryJDBC {
 
 	public boolean ExecuteUpdate(String szQuery, String[] parms) {
 		PreparedStatement preparedStatement = null;
-
-		boolean bOK = true;
 		m_updateAmount = 0;
 
 		// Try to get the columns and the amount of columns
 		try {
 
 			preparedStatement = this.m_conn.prepareStatement(szQuery);
-
 			int nParamAmount = parms.length;
 
 			for (int i = 0; i < nParamAmount; i++) {
@@ -145,7 +142,6 @@ public class QueryJDBC {
 		}
 
 		catch (SQLException ex) {
-			bOK = false;
 			this.m_error = "SQLException: " + ex.getMessage();
 			this.m_error += "SQLState: " + ex.getSQLState();
 			this.m_error += "VendorError: " + ex.getErrorCode();
@@ -154,7 +150,6 @@ public class QueryJDBC {
 			System.out.println("SQLState: " + ex.getSQLState());
 			System.out.println("VendorError: " + ex.getErrorCode());
 			return false;
-
 		}
 
 		return true;
@@ -162,6 +157,10 @@ public class QueryJDBC {
 
 	public boolean ConnectToDatabase(String host, String user, String pass, String database) {
 		String url;
+		
+		user = "mm_sttest5b";
+		pass = "mm_sttest5bPass";
+		
 		url = "jdbc:mysql://";
 		url += host;
 		url += ":3306/";
@@ -183,8 +182,9 @@ public class QueryJDBC {
 		return true;
 	}
 
-	/*
-	 * Document this function // TODO
+	/**
+	 * Closes the database connection and throws 
+	 * @returns false if the connection was not closed
 	 */
 	public boolean CloseDatabase() {
 		try {
