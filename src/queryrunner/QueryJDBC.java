@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class QueryJDBC {
 
 	public Connection m_conn = null;
-	static final String DB_DRV = "com.mysql.jdbc.Driver";
+	static final String DB_DRV = "com.mysql.cj.jdbc.Driver";
 	String m_error = "";
 	String m_url;
 	String m_user;
