@@ -59,6 +59,7 @@ public class ManageUp extends JFrame {
 		setBounds(100, 100, 1118, 723);
 		contentPane = new JPanel();
 		contentPane.setBackground( paleGreenMU );
+		contentPane.setOpaque(true);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -75,6 +76,7 @@ public class ManageUp extends JFrame {
 		panelWelcome.add(lbImageHomePage);
 		panelSkills = new JPanel();
 		panelSkills.setBackground( paleGreenMU );
+		panelSkills.setOpaque(true);
 		panelSkills.setBounds(319, 0, 799, 693);
 		contentPane.add(panelSkills);
 		panelSkills.setLayout(null);
@@ -111,7 +113,7 @@ public class ManageUp extends JFrame {
 		panelTitleAndParams = new JPanel();
 		panelTitleAndParams.setBounds(41, 62, 614, 83);
 		panelTitleAndParams.setBackground(paleGreenMU);
-		
+		panelTitleAndParams.setOpaque(true);
 		panelSkills.add(panelTitleAndParams);
 		panelTitleAndParams.setLayout(null);
 		
@@ -140,6 +142,8 @@ public class ManageUp extends JFrame {
 		btnExpertSkills = new JButton("Experts");
 		btnExpertSkills.setForeground(whiteMU);
 		btnExpertSkills.setBackground(greenMU);
+		btnExpertSkills.setOpaque(true); //Fix for macs
+		btnExpertSkills.setBorderPainted(false); //Fix for macs
 		btnExpertSkills.setBounds(41, 19, 114, 40);
 		String title = "Experts: Employees with Over One Year of Experience by Skill Set";
 		//Returns to default view
@@ -171,6 +175,9 @@ public class ManageUp extends JFrame {
 		});
 		btnTop5Skills.setForeground(whiteMU);
 		btnTop5Skills.setBackground(greenMU);
+		btnTop5Skills.setOpaque(true); //Fix for macs
+		btnTop5Skills.setBorderPainted(false); //Fix for macs
+
 		btnTop5Skills.setBounds(191, 19, 114, 40);
 		panelSkills.add(btnTop5Skills);
 		btnTop5Skills.setEnabled(false);
@@ -221,17 +228,17 @@ public class ManageUp extends JFrame {
 		panelLogin.add(userName);
 		userName.setColumns(10);
 
-		btnDBConnect = new Button("Connect");
+		btnDBConnect = new JButton("Connect");
 		btnDBConnect.setBounds(24, 164, 143, 35);
 		panelLogin.add(btnDBConnect);
 		btnDBConnect.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				databaseConnectActionPerformed(evt);			}
 		});
-		btnDBConnect.setForeground(UIManager.getColor("Panel.background"));
-		btnDBConnect.setBackground(UIManager.getColor("RadioButtonMenuItem.acceleratorForeground"));
-		
-		
+		btnDBConnect.setForeground(whiteMU);
+		btnDBConnect.setBackground(blueMU);
+		btnDBConnect.setOpaque(true);  //Fix for macs
+		btnDBConnect.setBorderPainted(false); //Fix for macs
 		
 		passWord = new JPasswordField();
 		passWord.setColumns(10);
@@ -364,7 +371,8 @@ public class ManageUp extends JFrame {
 	final private Color greenMU = new Color(32, 178, 170);
 	final private Color lightPinkMU = new java.awt.Color(220, 186, 196);
 	final private Color whiteMU = new Color(255, 255, 255);
-	
+	final private Color blueMU = new Color(103, 128, 194);
+
 	
 	/*
 	 * Content pane and panels
@@ -398,7 +406,8 @@ public class ManageUp extends JFrame {
 	/*
 	 * Buttons
 	 */
-	private Button btnDBConnect;
+	//private Button btnDBConnect;
+	private JButton btnDBConnect; 
 	private JButton btnExpertSkills;
 	private JButton btnTop5Skills;
 	private DefaultListModel<String> skillListModel;
