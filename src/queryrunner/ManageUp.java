@@ -33,7 +33,7 @@ import java.awt.GridLayout;
 public class ManageUp extends JFrame {
 
 	/**
-	 * This is the constructer for QueryFrame. It will initialize the Combobox with
+	 * This is the constructor for QueryFrame. It will initialize the Combobox with
 	 * the various queries that are part of the QueryData that has been passed to
 	 * it. It will also set the default state of the Command Buttons and combo
 	 * boxes.
@@ -285,17 +285,19 @@ public class ManageUp extends JFrame {
 				lblPassword.setVisible(true);
 				lblUserName.setVisible(true);
 				userName.setVisible(true);
+		    	userName.setText("");
 				passWord.setVisible(true);
+				passWord.setText("");
 				btnTop5Skills.setEnabled(false);
 				btnExpertSkills.setEnabled(false);
-		    	textFieldEntry1.setVisible(false);
+		    	textFieldEntry1.setVisible(false);		    	
 			}
 		}
 	}// GEN-LAST:event_databaseConnectActionPerformed
 
 	
 	/**
-	 * This event handler recfognizes when the expert skills button has been called
+	 * This event handler recognizes when the expert skills button has been called
 	 * @param evt
 	 */
 	private void expertSkillsQueryActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_expertSkillsQueryActionPerformed
