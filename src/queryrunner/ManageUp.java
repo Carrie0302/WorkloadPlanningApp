@@ -1,5 +1,10 @@
-package queryrunner;
+/*
+ * Team 5
+ * CPSC 5021, Seattle University
+ * This is free and unencumbered software released into the public domain.
+ */
 
+package queryrunner;
 import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Color;
@@ -46,7 +51,8 @@ public class ManageUp extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1118, 723);
 		contentPane = new JPanel();
-		contentPane.setBackground(paleGreenMU);
+		contentPane.setBackground( paleGreenMU );
+		contentPane.setOpaque(true);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -77,22 +83,7 @@ public class ManageUp extends JFrame {
 		panelLogin.add(userName);
 		userName.setColumns(10);
 
-		btnDBConnect = new Button("Connect");
-		btnDBConnect.setBounds(24, 164, 143, 35);
-		panelLogin.add(btnDBConnect);
-		btnDBConnect.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				databaseConnectActionPerformed(evt);
-			}
-		});
-		btnDBConnect.setForeground(UIManager.getColor("Panel.background"));
-		btnDBConnect.setBackground(UIManager.getColor(
-										"RadioButtonMenuItem.acceleratorForeground"));
-
-		passWord = new JPasswordField();
-		passWord.setColumns(10);
-		passWord.setBounds(24, 112, 268, 35);
-		panelLogin.add(passWord);
+		//Removed login and btn back to function
 
 		// User name and Password
 		lblUserName = new JLabel("User Name");
@@ -154,6 +145,7 @@ public class ManageUp extends JFrame {
 
 		// Objects created for the skill panel
 		panelSkills = new JPanel();
+		//Removed and moved
 		textFieldEntry1 = new JTextField();
 		textFieldEntry1.setBounds(137, 45, 191, 26);
 		textFieldEntry1.setColumns(10);
@@ -210,6 +202,7 @@ public class ManageUp extends JFrame {
 		panelTitleAndParams.setBounds(41, 62, 614, 83);
 		panelTitleAndParams.setBackground(paleGreenMU);
 
+		panelTitleAndParams.setOpaque(true);
 		panelSkills.add(panelTitleAndParams);
 		panelTitleAndParams.setLayout(null);
 
@@ -241,9 +234,8 @@ public class ManageUp extends JFrame {
 		btnExpertSkills = new JButton("Experts");
 		btnExpertSkills.setForeground(whiteMU);
 		btnExpertSkills.setBackground(greenMU);
-		btnExpertSkills.setOpaque(true);
-		btnExpertSkills.setBorderPainted(false);
-
+		btnExpertSkills.setOpaque(true); //Fix for macs
+		btnExpertSkills.setBorderPainted(false); //Fix for macs
 		btnExpertSkills.setBounds(41, 19, 114, 40);
 		String title = "Experts: Employees with Over One Year of Experience by Skill Set";
 		// Returns to default view
@@ -275,8 +267,8 @@ public class ManageUp extends JFrame {
 		});
 		btnTop5Skills.setForeground(whiteMU);
 		btnTop5Skills.setBackground(greenMU);
-		btnTop5Skills.setOpaque(true);
-		btnTop5Skills.setBorderPainted(false);
+		btnTop5Skills.setOpaque(true); //Fix for macs
+		btnTop5Skills.setBorderPainted(false); //Fix for macs
 		btnTop5Skills.setBounds(191, 19, 114, 40);
 		panelSkills.add(btnTop5Skills);
 		btnTop5Skills.setEnabled(false);
@@ -303,9 +295,24 @@ public class ManageUp extends JFrame {
 		lbLogo.setBounds(24, 12, 280, 107);
 	}
 
-	// ???
+	// Initialize the db connection button and login
 	private void initUserNameAndPassword() {
-
+		btnDBConnect = new JButton("Connect");
+		btnDBConnect.setBounds(24, 164, 143, 35);
+		panelLogin.add(btnDBConnect);
+		btnDBConnect.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				databaseConnectActionPerformed(evt);			}
+		});
+		btnDBConnect.setForeground(whiteMU);
+		btnDBConnect.setBackground(blueMU);
+		btnDBConnect.setOpaque(true);  //Fix for macs
+		btnDBConnect.setBorderPainted(false); //Fix for macs
+		
+		passWord = new JPasswordField();
+		passWord.setColumns(10);
+		passWord.setBounds(24, 112, 268, 35);
+		panelLogin.add(passWord);
 	}
 
 	// Action for CheckProject button
@@ -357,7 +364,6 @@ public class ManageUp extends JFrame {
 		String pwd = passWord.getText();
 		String db = "mm_sttest5b";
 		user = userName.getText();
-
 		if (btnDBConnect.getLabel() == "Connect") {
 			bOK = queryrunner.Connect(host, user, pwd, db);
 			if (bOK == true) {
@@ -464,7 +470,9 @@ public class ManageUp extends JFrame {
 	final private Color greenMU = new Color(32, 178, 170);
 	final private Color lightPinkMU = new java.awt.Color(220, 186, 196);
 	final private Color whiteMU = new Color(255, 255, 255);
+	final private Color blueMU = new Color(103, 128, 194);
 
+	
 	/*
 	 * Content pane and panels
 	 */
@@ -500,7 +508,8 @@ public class ManageUp extends JFrame {
 	/*
 	 * Buttons
 	 */
-	private Button btnDBConnect;
+	//private Button btnDBConnect;
+	private JButton btnDBConnect; 
 	private JButton btnExpertSkills;
 	private JButton btnTop5Skills;
 	private DefaultListModel<String> skillListModel;
