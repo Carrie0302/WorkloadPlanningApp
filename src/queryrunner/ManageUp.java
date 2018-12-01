@@ -405,9 +405,6 @@ public class ManageUp extends JFrame {
 	private QueryRunner queryrunner;
 	private String[] parameters = {};
 	
-//	private final JLabel[] m_parmlabels;
-//	private JTextField[] m_textvals;
-//	private JScrollPane m_scrollPane;
 	private int m_queryChoice = 0; // This is the default query that was selected
 	private JTextField textFieldEntry1;
 }
