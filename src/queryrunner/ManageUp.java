@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.DefaultListModel;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -28,6 +29,9 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
+import jiconfont.icons.FontAwesome;
+import jiconfont.swing.IconFontSwing;
+
 
 public class ManageUp extends JFrame {
 
@@ -69,8 +73,7 @@ public class ManageUp extends JFrame {
 		panelWelcome.add(lbImageHomePage);
 		panelLogin = new JPanel();
 		panelLogin.setBounds(0, 0, 321, 693);
-		panelLogin.setBackground(UIManager.getColor(
-										"SplitPaneDivider.draggingColor"));
+		panelLogin.setBackground(greyMU);
 		contentPane.add(panelLogin);
 		panelLogin.setLayout(null);
 		lblWelcome = new JLabel("");
@@ -97,9 +100,12 @@ public class ManageUp extends JFrame {
 
 		// Project Status Report Button
 		btnCheckProjects = new JButton("Project Status");
+		Icon iconProject = IconFontSwing.buildIcon(FontAwesome.CALENDAR_CHECK_O, 15, whiteMU);
+		btnCheckProjects.setIcon(iconProject);
+		
 		btnCheckProjects.setVisible(false);
 		btnCheckProjects.setFont(new Font("Lucida Grande", Font.BOLD, 14));
-		btnCheckProjects.setBackground(lightPinkMU);
+		btnCheckProjects.setBackground(greyMU);
 		btnCheckProjects.setForeground(whiteMU);
 		btnCheckProjects.setOpaque(true);
 		btnCheckProjects.setBorderPainted(true);
@@ -108,14 +114,21 @@ public class ManageUp extends JFrame {
 		btnCheckProjects.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				showPanelPM(evt);
+				
+				//System.out.println( btnCheckProjects.getBackground().toString());
 			}
 		});
 
 		// Skill Assessment Report Button
 		btnCheckSkills = new JButton("Skill Assessment");
+		Icon iconWrench = IconFontSwing.buildIcon(FontAwesome.WRENCH, 15, whiteMU);
+		btnCheckSkills.setIcon(iconWrench);
+		
 		btnCheckSkills.setVisible(false);
 		btnCheckSkills.setFont(new Font("Lucida Grande", Font.BOLD, 14));
-		btnCheckSkills.setBackground(greenMU);
+		btnCheckSkills.setBackground(greyMU);
+		btnCheckSkills.setForeground(whiteMU);
+		btnCheckSkills.setBackground(greyMU);
 		btnCheckSkills.setForeground(whiteMU);
 		btnCheckSkills.setOpaque(true);
 		btnCheckSkills.setBorderPainted(true);
@@ -129,9 +142,11 @@ public class ManageUp extends JFrame {
 
 		// About Button
 		btnAbout = new JButton("About");
+		Icon iconAbout = IconFontSwing.buildIcon(FontAwesome.WRENCH, 15, whiteMU);
+		btnAbout.setIcon(iconAbout);
 		btnAbout.setVisible(false);
-		btnAbout.setFont(new Font("Lucida Grande", Font.BOLD, 14));
-		btnAbout.setBackground(paleGreenMU);
+		btnAbout.setFont(new Font("Lucida Grande", Font.BOLD, 14));		
+		btnAbout.setBackground(greyMU);
 		btnAbout.setForeground(whiteMU);
 		btnAbout.setOpaque(true);
 		btnAbout.setBorderPainted(true);
@@ -161,6 +176,7 @@ public class ManageUp extends JFrame {
 
 	// Initialize Home page
 	private void initPanels() {
+		IconFontSwing.register(FontAwesome.getIconFont());
 		initHomePage();
 		initSkillsPanel();
 		initPMPanel();
@@ -313,6 +329,14 @@ public class ManageUp extends JFrame {
 		passWord.setColumns(10);
 		passWord.setBounds(24, 112, 268, 35);
 		panelLogin.add(passWord);
+
+//		JLabel lblNewLabel = new JLabel("Hello!");
+//		Icon icon = IconFontSwing.buildIcon(FontAwesome.WRENCH, 18, whiteMU);
+//		lblNewLabel.setIcon(icon);
+//		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 16));
+//		lblNewLabel.setForeground( whiteMU );		
+//		lblNewLabel.setBounds(35, 244, 257, 50);
+//		panelLogin.add(lblNewLabel);
 	}
 
 	// Action for CheckProject button
@@ -466,11 +490,12 @@ public class ManageUp extends JFrame {
 	/**
 	 * Colors
 	 */
-	final private Color paleGreenMU = new java.awt.Color(192, 249, 233);
+	final private Color paleGreenMU = new Color(192, 249, 233);
 	final private Color greenMU = new Color(32, 178, 170);
-	final private Color lightPinkMU = new java.awt.Color(220, 186, 196);
+	final private Color lightPinkMU = new Color(220, 186, 196);
 	final private Color whiteMU = new Color(255, 255, 255);
 	final private Color blueMU = new Color(103, 128, 194);
+	final private Color greyMU = new Color(64,64,64);
 
 	
 	/*
@@ -522,7 +547,7 @@ public class ManageUp extends JFrame {
 	private JButton btnCheckProjects;
 	private JButton btnCheckSkills;
 	private JButton btnAbout;
-
+	
 	/*
 	 * Database Queries
 	 */
