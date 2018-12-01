@@ -105,14 +105,14 @@ public class ManageUp extends JFrame {
 		panelLogin.add(lblPassword);
 
 		// Project Status Report Button
-		btnCheckProjects = new JButton("Project Status Report");
+		btnCheckProjects = new JButton("Project Status");
 		btnCheckProjects.setVisible(false);
-		btnCheckProjects.setFont(new Font("Lucida Grande", Font.BOLD, 18));
+		btnCheckProjects.setFont(new Font("Lucida Grande", Font.BOLD, 14));
 		btnCheckProjects.setBackground(lightPinkMU);
 		btnCheckProjects.setForeground(whiteMU);
 		btnCheckProjects.setOpaque(true);
-		btnCheckProjects.setBorderPainted(false);
-		btnCheckProjects.setBounds(22, 400, 274, 80);
+		btnCheckProjects.setBorderPainted(true);
+		btnCheckProjects.setBounds(56, 384, 200, 50);
 		panelLogin.add(btnCheckProjects);
 		btnCheckProjects.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
@@ -121,14 +121,14 @@ public class ManageUp extends JFrame {
 		});
 
 		// Skill Assessment Report Button
-		btnCheckSkills = new JButton("Skill Assessment Report");
+		btnCheckSkills = new JButton("Skill Assessment");
 		btnCheckSkills.setVisible(false);
-		btnCheckSkills.setFont(new Font("Lucida Grande", Font.BOLD, 18));
+		btnCheckSkills.setFont(new Font("Lucida Grande", Font.BOLD, 14));
 		btnCheckSkills.setBackground(greenMU);
 		btnCheckSkills.setForeground(whiteMU);
 		btnCheckSkills.setOpaque(true);
-		btnCheckSkills.setBorderPainted(false);
-		btnCheckSkills.setBounds(22, 260, 274, 80);
+		btnCheckSkills.setBorderPainted(true);
+		btnCheckSkills.setBounds(56, 322, 200, 50);
 		panelLogin.add(btnCheckSkills);
 		btnCheckSkills.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
@@ -139,12 +139,17 @@ public class ManageUp extends JFrame {
 		// About Button
 		btnAbout = new JButton("About");
 		btnAbout.setVisible(false);
-		btnAbout.setFont(new Font("Lucida Grande", Font.BOLD, 28));
+		btnAbout.setFont(new Font("Lucida Grande", Font.BOLD, 14));
 		btnAbout.setBackground(paleGreenMU);
 		btnAbout.setForeground(whiteMU);
 		btnAbout.setOpaque(true);
-		btnAbout.setBorderPainted(false);
-		btnAbout.setBounds(22, 540, 274, 80);
+		btnAbout.setBorderPainted(true);
+		btnAbout.setBounds(56, 446, 200, 50);
+		btnAbout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				//TODO : show about panel
+			}
+		});
 		panelLogin.add(btnAbout);
 
 		// Objects created for the skill panel
@@ -367,6 +372,9 @@ public class ManageUp extends JFrame {
 				btnCheckProjects.setVisible(true);
 				btnCheckSkills.setVisible(true);
 				btnAbout.setVisible(true);
+
+				btnTop5Skills.setEnabled(true);
+				btnExpertSkills.setEnabled(true);
 				// Default data view after user logs in
 
 			}
@@ -383,8 +391,10 @@ public class ManageUp extends JFrame {
 				userName.setText("");
 				passWord.setVisible(true);
 				passWord.setText("");
+				
 				btnTop5Skills.setEnabled(false);
 				btnExpertSkills.setEnabled(false);
+				
 				textFieldEntry1.setVisible(false);
 				btnCheckProjects.setVisible(false);
 				btnCheckSkills.setVisible(false);
