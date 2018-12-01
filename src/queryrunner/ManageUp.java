@@ -73,6 +73,11 @@ public class ManageUp extends JFrame {
 		panelSkills.setBounds(319, 0, 799, 693);
 		contentPane.add(panelSkills);
 		panelSkills.setLayout(null);
+		
+		textFieldEntry1 = new JTextField();
+		textFieldEntry1.setBounds(137, 45, 191, 26);
+		textFieldEntry1.setColumns(10);
+    	textFieldEntry1.setVisible(false);
 	}
 	
 	
@@ -105,10 +110,7 @@ public class ManageUp extends JFrame {
 		panelSkills.add(panelTitleAndParams);
 		panelTitleAndParams.setLayout(null);
 		
-		textFieldEntry1 = new JTextField();
-		textFieldEntry1.setBounds(137, 45, 191, 26);
 		panelTitleAndParams.add(textFieldEntry1);
-		textFieldEntry1.setColumns(10);
 		textFieldEntry1.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent event) {
 		    	expertSkillsQueryActionPerformed(event);
@@ -223,7 +225,9 @@ public class ManageUp extends JFrame {
 		});
 		btnDBConnect.setForeground(UIManager.getColor("Panel.background"));
 		btnDBConnect.setBackground(UIManager.getColor("RadioButtonMenuItem.acceleratorForeground"));
-
+		
+		
+		
 		passWord = new JPasswordField();
 		passWord.setColumns(10);
 		passWord.setBounds(24, 112, 268, 35);
@@ -269,6 +273,7 @@ public class ManageUp extends JFrame {
 				executeSkillQuery(0, parameters);
 				btnTop5Skills.setEnabled(true);
 				btnExpertSkills.setEnabled(true);
+		    	textFieldEntry1.setVisible(true);
 			}
 		} else {
 			bOK = queryrunner.Disconnect();
@@ -283,6 +288,7 @@ public class ManageUp extends JFrame {
 				passWord.setVisible(true);
 				btnTop5Skills.setEnabled(false);
 				btnExpertSkills.setEnabled(false);
+		    	textFieldEntry1.setVisible(false);
 			}
 		}
 	}// GEN-LAST:event_databaseConnectActionPerformed
