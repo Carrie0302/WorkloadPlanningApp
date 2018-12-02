@@ -91,15 +91,30 @@ public class QueryRunner {
 	
 	private void IncompleteTasksQuery() {
 	   // queryArray[5]
-      queryArray.add(new QueryData("SELECT * FROM IncompleteTasks_ProjectsEndingThisMonth"
+      queryArray.add(new QueryData("SELECT task_name as 'Task',   "
+      		+ "  days_before_project_end as 'Days before Project Ends',"
+      		+ "	 project_end_date as 'Project Ends',"
+      		+ "  blockers_flagged as 'Blockers Flagged', deliverable_name as 'Deliverable', "
+      		+ "  project_name as 'Project', project_manager as 'Manager'"
+      		+ "  FROM IncompleteTasks_ProjectsEndingThisMonth"
       , null, null, false, false));
    }
    
    private void EmployeeTasksQuery() {
       // queryArray[6]
-      queryArray.add(new QueryData("SELECT * FROM Employee_TasksOrderByEndDate ", null, null, false, false));
+      queryArray.add(new QueryData("SELECT "
+      		+ "task_name as 'Task', end_time as 'Finish Date', "
+      		+ "expected_time_to_complete as 'Excpected Completion Time', real_time_to_complete 'Real Completion Time', "
+      		+ "blockers_flagged as 'Blockers', difficulty_rate_id as 'Difficulty Rating'"
+      		+ ", employee as 'Employee'"
+      		+ " FROM Employee_TasksOrderByEndDate ", null, null, false, false));
       // queryArray[7]
-      queryArray.add(new QueryData("SELECT * FROM Employee_TasksOrderByEndDate "
+      queryArray.add(new QueryData("SELECT "
+        		+ "task_name as 'Task', end_time as 'Finish Date', "
+          		+ "expected_time_to_complete as 'Excpected Completion Time', real_time_to_complete 'Real Completion Time', "
+          		+ "blockers_flagged as 'Blockers', difficulty_rate_id as 'Difficulty Rating'"
+          		+ ", employee as 'Employee'"
+      		+ " FROM Employee_TasksOrderByEndDate "
       + "WHERE employee LIKE ?", new String[] { "First Name" }, new boolean[] { true }, false, true));
    }
    
