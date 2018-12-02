@@ -158,6 +158,8 @@ public class ManageUp extends JFrame {
 
 		// Objects created for the skill panel
 		panelSkills = new JPanel();
+		
+		
 		// Removed and moved
 		textFieldEntry1 = new JTextField();
 		textFieldEntry1.setBounds(137, 45, 191, 26);
@@ -170,26 +172,26 @@ public class ManageUp extends JFrame {
 		txtEnterName = new JTextField();
 		txtEnterName.setForeground(Color.GRAY);
 		txtEnterName.setText("Enter Employee Name");
-		txtEnterName.setBounds(557, 5, 187, 29);
+		txtEnterName.setBounds(557, 5, 187, 35);
 		txtEnterName.setColumns(10);
 		txtEnterName.setVisible(false);
 
 		txtEnterTaskName = new JTextField();
 		txtEnterTaskName.setForeground(Color.GRAY);
 		txtEnterTaskName.setText("Enter TaskName");
-		txtEnterTaskName.setBounds(206, 74, 164, 26);
+		txtEnterTaskName.setBounds(206, 74, 164, 35);
 		txtEnterTaskName.setColumns(10);
 
 		txtEnterDeliver = new JTextField();
 		txtEnterDeliver.setForeground(Color.GRAY);
 		txtEnterDeliver.setText("Enter DeliverableID");
-		txtEnterDeliver.setBounds(382, 74, 164, 26);
+		txtEnterDeliver.setBounds(382, 74, 164, 35);
 		txtEnterDeliver.setColumns(10);
 
 		txtEnterEmployeeid = new JTextField();
 		txtEnterEmployeeid.setForeground(Color.GRAY);
 		txtEnterEmployeeid.setText("Enter EmployeeID");
-		txtEnterEmployeeid.setBounds(558, 74, 158, 26);
+		txtEnterEmployeeid.setBounds(558, 74, 158, 35);
 		txtEnterEmployeeid.setColumns(10);
 
 	}
@@ -212,13 +214,37 @@ public class ManageUp extends JFrame {
 		initHomePage();
 		initSkillsPanel();
 		initPMPanel();
+//		//TO DO REMOVE
+//		getContentPane().remove(panelWelcome);
+//		getContentPane().remove(panelSkills);
+//		getContentPane().add(panelPMReview);
+//		repaint();
+//
+//		// Set background
+//		panelPMReview.setBackground(paleGreenMU);
+//		panelPMReview.setBounds(319, 0, 799, 693);
+//		contentPane.add(panelPMReview);
+//		panelPMReview.setLayout(null);
+//
+//		btnIncompletetasks.setEnabled(true);
+//		btnInserttask.setEnabled(true);
+//		btnTasksOrderBy.setEnabled(true);
+//		txtEnterTaskName.setVisible(false);
+//		txtEnterDeliver.setVisible(false);
+//		txtEnterEmployeeid.setVisible(false);
 	}
 
 	// Skill Panel
 	private void initSkillsPanel() {
+		JLabel lblSkillsAssesment = new JLabel("Skills Assesment Report");
+		lblSkillsAssesment.setForeground(UIManager.getColor("ComboBox.foreground"));
+		lblSkillsAssesment.setFont(new Font("NanumSquareRound Bold", Font.BOLD, 22));
+		lblSkillsAssesment.setBounds(42, 12, 422, 37);
+		panelSkills.add(lblSkillsAssesment);
+		
 		skillListModel = new DefaultListModel<String>();
 		panelTableSkills = new JPanel();
-		panelTableSkills.setBounds(41, 157, 731, 457);
+		panelTableSkills.setBounds(35, 224, 731, 457);
 
 		String[] columnHeader = { "Years of Experience", "User Id", "Employee Name",
 				"Year Skill Acquired", "Skill Id",
@@ -233,7 +259,7 @@ public class ManageUp extends JFrame {
 		addTableFormat(skillsTable, panelTableSkills, columnHeader);
 
 		panelTitleAndParams = new JPanel();
-		panelTitleAndParams.setBounds(41, 62, 614, 83);
+		panelTitleAndParams.setBounds(35, 113, 614, 83);
 		panelTitleAndParams.setBackground(paleGreenMU);
 
 		panelTitleAndParams.setOpaque(true);
@@ -269,7 +295,7 @@ public class ManageUp extends JFrame {
 		btnExpertSkills.setBackground(greenMU);
 		btnExpertSkills.setOpaque(true); // Fix for macs
 		btnExpertSkills.setBorderPainted(false); // Fix for macs
-		btnExpertSkills.setBounds(41, 19, 114, 40);
+		btnExpertSkills.setBounds(36, 61, 114, 40);
 		String title = "Experts: Employees with Over One Year of Experience by Skill Set";
 		// Returns to default view
 		btnExpertSkills.addActionListener(new ActionListener() {
@@ -302,7 +328,7 @@ public class ManageUp extends JFrame {
 		btnTop5Skills.setBackground(greenMU);
 		btnTop5Skills.setOpaque(true); // Fix for macs
 		btnTop5Skills.setBorderPainted(false); // Fix for macs
-		btnTop5Skills.setBounds(191, 19, 114, 40);
+		btnTop5Skills.setBounds(186, 61, 114, 40);
 		panelSkills.add(btnTop5Skills);
 		btnTop5Skills.setEnabled(false);
 	}
@@ -388,9 +414,15 @@ public class ManageUp extends JFrame {
 		panelTableTasks = new JPanel();
 		addTableFormat(taskTable, panelTableTasks, columnHeader);
 		panelPMReview.add(panelTableTasks);
-		panelTableTasks.setBounds(22, 158, 760, 449);
+		panelTableTasks.setBounds(22, 204, 760, 449);
 		panelTableTasks.setLayout(null);
 
+		JLabel lblProjectStatus = new JLabel("Project Status Report");
+		lblProjectStatus.setForeground(UIManager.getColor("ComboBox.foreground"));
+		lblProjectStatus.setFont(new Font("NanumSquareRound Bold", Font.BOLD, 22));
+		lblProjectStatus.setBounds(29, 12, 422, 37);
+		panelPMReview.add(lblProjectStatus);
+		
 		scrollPane = new JScrollPane();
 		scrollPane.setMaximumSize(new Dimension(50000, 50000));
 		scrollPane.setBounds(0, 0, 760, 450);
@@ -398,7 +430,7 @@ public class ManageUp extends JFrame {
 		scrollPane.setViewportView(taskTable);
 
 		panelTasksParams = new JPanel();
-		panelTasksParams.setBounds(22, 38, 750, 106);
+		panelTasksParams.setBounds(22, 61, 750, 106);
 		panelTasksParams.setBackground(paleGreenMU);
 		panelPMReview.add(panelTasksParams);
 		panelTasksParams.setLayout(null);
@@ -464,7 +496,7 @@ public class ManageUp extends JFrame {
 	// Query 5 - Show incomplete tasks ending this month
 	private void addIncompleteTasks() {
 		btnIncompletetasks = new JButton("Incomplete Tasks This Month");
-		btnIncompletetasks.setBounds(0, 6, 271, 29);
+		btnIncompletetasks.setBounds(0, 6, 257, 35);
 		btnIncompletetasks.setForeground(whiteMU);
 		btnIncompletetasks.setBackground(greenMU);
 		btnIncompletetasks.setOpaque(true); // Fix for macs
@@ -487,7 +519,7 @@ public class ManageUp extends JFrame {
 	private void addTasks() {
 
 		btnTasksOrderBy = new JButton("All Tasks");
-		btnTasksOrderBy.setBounds(374, 6, 178, 29);
+		btnTasksOrderBy.setBounds(374, 6, 178, 35);
 		btnTasksOrderBy.setForeground(whiteMU);
 		btnTasksOrderBy.setBackground(greenMU);
 		btnTasksOrderBy.setOpaque(true); // Fix for macs
@@ -518,7 +550,7 @@ public class ManageUp extends JFrame {
 	private void insertNewTask() {
 
 		btnInserttask = new JButton("Insert New Task");
-		btnInserttask.setBounds(6, 74, 139, 29);
+		btnInserttask.setBounds(6, 74, 170, 35);
 		btnInserttask.setForeground(whiteMU);
 		btnInserttask.setBackground(greenMU);
 		btnInserttask.setOpaque(true); // Fix for macs
