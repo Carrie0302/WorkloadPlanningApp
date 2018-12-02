@@ -1,15 +1,21 @@
 /*
  * Team 5
+
  * CPSC 5021, Seattle University
  * This is free and unencumbered software released into the public domain.
  */
 package queryrunner;
 import java.awt.BorderLayout;
+
 import java.awt.Button;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+
 import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -18,6 +24,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
@@ -102,8 +109,8 @@ public class ManageUp extends JFrame {
 		btnAbout = new JButton("About");
 		btnNavigation = new JButton[] { btnCheckProjects, btnCheckSkills, btnAbout };
 		
-		Icon iconProject = IconFontSwing.buildIcon(FontAwesome.CALENDAR_CHECK_O, 15, whiteMU);
-		btnCheckProjects.setIcon(iconProject);
+		//Icon iconProject = IconFontSwing.buildIcon(FontAwesome.CALENDAR_CHECK_O, 15, Color.WHITE);
+		//btnCheckProjects.setIcon(iconProject);
 		btnCheckProjects.setVisible(false);
 		btnCheckProjects.setFont(new Font("Lucida Grande", Font.BOLD, 14));
 		btnCheckProjects.setBackground(greyMU);
@@ -120,12 +127,10 @@ public class ManageUp extends JFrame {
 		});
 
 		// Skill Assessment Report Button
-		Icon iconWrench = IconFontSwing.buildIcon(FontAwesome.WRENCH, 15, whiteMU);
-		btnCheckSkills.setIcon(iconWrench);
+		//Icon iconWrench = IconFontSwing.buildIcon(FontAwesome.WRENCH, 15, Color.WHITE);
+		//btnCheckSkills.setIcon(iconWrench);
 		btnCheckSkills.setVisible(false);
 		btnCheckSkills.setFont(new Font("Lucida Grande", Font.BOLD, 14));
-		btnCheckSkills.setBackground(greyMU);
-		btnCheckSkills.setForeground(whiteMU);
 		btnCheckSkills.setBackground(greyMU);
 		btnCheckSkills.setForeground(whiteMU);
 		btnCheckSkills.setOpaque(true);
@@ -140,8 +145,8 @@ public class ManageUp extends JFrame {
 		});
 
 		// About Button
-		Icon iconAbout = IconFontSwing.buildIcon(FontAwesome.WRENCH, 15, whiteMU);
-		btnAbout.setIcon(iconAbout);
+		//Icon iconAbout = IconFontSwing.buildIcon(FontAwesome.WRENCH, 15, Color.WHITE);
+		//btnAbout.setIcon(iconAbout);
 		btnAbout.setVisible(false);
 		btnAbout.setFont(new Font("Lucida Grande", Font.BOLD, 14));		
 		btnAbout.setBackground(greyMU);
@@ -167,10 +172,32 @@ public class ManageUp extends JFrame {
 
 		// Objects created for the PM panel
 		panelPMReview = new JPanel();
-		textFieldEntry2 = new JTextField();
-		textFieldEntry2.setBounds(137, 45, 191, 26);
-		textFieldEntry2.setColumns(10);
-		textFieldEntry2.setVisible(false);
+		
+		txtEnterName = new JTextField();
+      txtEnterName.setForeground(Color.GRAY);
+      txtEnterName.setText("Enter Employee Name");
+      txtEnterName.setBounds(557, 5, 187, 29);      
+      txtEnterName.setColumns(10);
+      txtEnterName.setVisible(false);
+      
+      txtEnterTaskName = new JTextField();
+      txtEnterTaskName.setForeground(Color.GRAY);
+      txtEnterTaskName.setText("Enter TaskName");
+      txtEnterTaskName.setBounds(206, 74, 164, 26);
+      txtEnterTaskName.setColumns(10);
+      
+      txtEnterDeliver = new JTextField();
+      txtEnterDeliver.setForeground(Color.GRAY);
+      txtEnterDeliver.setText("Enter DeliverableID");
+      txtEnterDeliver.setBounds(382, 74, 164, 26);
+      txtEnterDeliver.setColumns(10);
+      
+      txtEnterEmployeeid = new JTextField();
+      txtEnterEmployeeid.setForeground(Color.GRAY);
+      txtEnterEmployeeid.setText("Enter EmployeeID");
+      txtEnterEmployeeid.setBounds(558, 74, 158, 26);
+      txtEnterEmployeeid.setColumns(10);
+		
 	}
 
 	
@@ -196,21 +223,7 @@ public class ManageUp extends JFrame {
 		initPMPanel();
 	}
 
-	// Project panel
-	private void initPMPanel() {
-
-		taskListModel = new DefaultListModel<String>();
-		panelTableTasks = new JPanel();
-		panelTableTasks.setBounds(41, 157, 731, 457);
-
-		panelPMReview.add(panelTableTasks);
-
-		panelTitleAndParams = new JPanel();
-		panelTitleAndParams.setBounds(41, 62, 614, 83);
-		panelTitleAndParams.setBackground(whiteMU);
-
-	}
-
+	// Skill Panel
 	private void initSkillsPanel() {
 		skillListModel = new DefaultListModel<String>();
 		panelTableSkills = new JPanel();
@@ -219,8 +232,8 @@ public class ManageUp extends JFrame {
 		String[] columnHeader = { "Years of Experience", "User Id",
 									"Employee Name", "Year Skill Acquired", "Skill Id",
 									"Skill" };
-		skillModel = new DefaultTableModel(columnHeader, 0);
-		skillsTable = new JTable(skillModel);
+		model = new DefaultTableModel(columnHeader, 0);
+		skillsTable = new JTable(model);
 		JTableHeader header = skillsTable.getTableHeader();
 		header.setBackground(whiteMU);
 		header.setForeground(Color.black);
@@ -317,7 +330,290 @@ public class ManageUp extends JFrame {
 		panel.add(table, BorderLayout.CENTER);
 		panel.add(table.getTableHeader(), BorderLayout.NORTH);
 	}
+	
+	/**
+    * This event handler recognizes when the expert skills button has been
+    * called
+    * 
+    * @param evt
+    */
+   private void expertSkillsQueryActionPerformed(
+                           java.awt.event.ActionEvent evt) {// GEN-FIRST:event_expertSkillsQueryActionPerformed
+      m_queryChoice = 1;
+      String[] parameters = new String[1];
+      parameters[0] = "%" + textFieldEntry1.getText() + "%";
+      executeSkillQuery(m_queryChoice, parameters);
+   }// GEN-LAST:event_expertSkillsQueryActionPerformed
 
+   /**
+    * Takes in a query number and a parameter string to populate the Skills
+    * Table with the appropriate query
+    * 
+    * @param m_queryChoice
+    * @param parameters
+    */
+   private void executeSkillQuery(int m_queryChoice, String[] parameters) {
+      boolean bOK = true;
+      String[] headers;
+      String[][] allData;
+      bOK = queryrunner.ExecuteQuery(m_queryChoice, parameters);
+      if (bOK == true) {
+         headers = queryrunner.GetQueryHeaders();
+         allData = queryrunner.GetQueryData();
+         updateSkillsTableView(headers, allData);
+      } else {
+         System.out.println("Not executable.");
+      }
+   }
+
+   /**
+    * Updates the Skills Table with the headers and data
+    * 
+    * @param headers column header
+    * @param allData values from skills query
+    */
+   private void updateSkillsTableView(String[] headers, String[][] allData) {
+      int countRows = 0;
+      DefaultTableModel model = new DefaultTableModel(headers, 0);
+      skillListModel.clear();
+      for (int i = 0; i < allData.length; i++) {
+         model.addRow(allData[i]);
+         countRows++;
+      }
+      skillsTable.setModel(model);
+      ((AbstractTableModel) model).fireTableDataChanged();
+      System.out.println("Data for Skills, pulled " + countRows + " rows");
+   }
+	
+   // Project panel
+   private void initPMPanel() {
+
+      taskListModel = new DefaultListModel<String>();
+      
+      String[] columnHeader = {"TaskID", "TaskName", "DeliverableName", 
+            "DaysBeforeEnd", "Blocker", "ProjectName"};
+      model = new DefaultTableModel(columnHeader, 0);
+      taskTable = new JTable(model);
+      JTableHeader header = taskTable.getTableHeader();         
+      header.setBackground(whiteMU);
+      header.setForeground(Color.black);      
+            
+      panelTableTasks = new JPanel();
+      addTableFormat(taskTable, panelTableTasks, columnHeader );
+      panelPMReview.add(panelTableTasks);      
+      panelTableTasks.setBounds(22, 158, 760, 449);
+      panelTableTasks.setLayout(null);
+      
+      scrollPane = new JScrollPane();
+      scrollPane.setMaximumSize(new Dimension(50000, 50000));
+      scrollPane.setBounds(0, 0, 760, 450);
+      panelTableTasks.add(scrollPane);      
+      scrollPane.setViewportView(taskTable);
+           
+      panelTasksParams = new JPanel();
+      panelTasksParams.setBounds(22, 38, 750, 106);
+      panelTasksParams.setBackground(lightPinkMU);
+      panelPMReview.add(panelTasksParams);
+      panelTasksParams.setLayout(null);
+           
+      panelTasksParams.add(txtEnterName);      
+      txtEnterName.addFocusListener(new FocusListener() { 
+         public void focusGained(FocusEvent e) {} 
+         public void focusLost(FocusEvent e) {
+            txtEnterName.setText("Enter Employee Name");
+         }
+      });
+      
+      // JTextField - Enter employee name
+      txtEnterName.addActionListener(new ActionListener() {
+         public void actionPerformed(ActionEvent event) {
+            employeeTaskQueryPerformed(event);
+             System.out.println("The entered text is: " + txtEnterName.getText());
+         }
+     });    
+      
+      // JTextField - Enter Task name
+      panelTasksParams.add(txtEnterTaskName);
+      txtEnterTaskName.addActionListener(new ActionListener() {
+         public void actionPerformed(ActionEvent event) {
+             System.out.println("The entered text is: " +  txtEnterTaskName.getText());
+         }
+     });    
+      
+      // JTextField - Enter Deliverable ID
+      panelTasksParams.add(txtEnterDeliver);     
+      txtEnterDeliver.addActionListener(new ActionListener() {
+         public void actionPerformed(ActionEvent event) {
+             System.out.println("The entered text is: " + txtEnterDeliver.getText());
+         }
+     });    
+      
+      // JTextField - Enter Employee ID (Perform Insert by Enter key)
+      panelTasksParams.add(txtEnterEmployeeid);    
+      txtEnterEmployeeid.addActionListener(new ActionListener() {
+         public void actionPerformed(ActionEvent event) {
+            insertTaskPerformed(event);
+            String[] head = {"Tip for Check Your Insert: "};
+            DefaultTableModel model = new DefaultTableModel(head, 0);
+            taskListModel.clear();
+            head[0] = "Type in task owner name in EmployeeName "
+            + "textfield and press Enter⏎. "
+            + "You will see the newly-inserted task at the end.";
+            model.addRow(head);
+            taskTable.setModel(model);
+            System.out.println("The entered text is: " + txtEnterEmployeeid.getText());
+         }
+     });    
+           
+      addIncompleteTasks();
+      addTasks();
+      insertNewTask();
+      txtEnterTaskName.setVisible(false);
+      txtEnterDeliver.setVisible(false);
+      txtEnterEmployeeid.setVisible(false);
+   }
+
+   // Query 5 - Show incomplete tasks ending this month
+   private void addIncompleteTasks() {
+      btnIncompletetasks = new JButton("Incomplete Tasks Ending This Month");
+      btnIncompletetasks.setBounds(0, 6, 271, 29);
+      panelTasksParams.add(btnIncompletetasks);
+      
+      btnIncompletetasks.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent event) {
+            executeTasksQuery(5, parameters);
+            txtEnterName.setVisible(false);
+            txtEnterTaskName.setVisible(false);
+            txtEnterDeliver.setVisible(false);
+            txtEnterEmployeeid.setVisible(false);
+          }
+      });     
+      btnIncompletetasks.setEnabled(false);       
+   }
+   
+   // Query 6 - Show all tasks order by end date
+   private void addTasks() {
+      
+      btnTasksOrderBy = new JButton("Tasks Order By End Date");
+      btnTasksOrderBy.setBounds(374, 6, 178, 29);
+      panelTasksParams.add(btnTasksOrderBy);
+      
+      btnTasksOrderBy.addActionListener(new ActionListener() {
+         public void actionPerformed(ActionEvent e) {
+            executeTasksQuery(6, parameters);
+            txtEnterName.setVisible(true);
+            txtEnterTaskName.setVisible(false);
+            txtEnterDeliver.setVisible(false);
+            txtEnterEmployeeid.setVisible(false);
+         }
+      });       
+      btnTasksOrderBy.setEnabled(false);       
+   }
+    
+   // Query 7 - Show tasks with input of one Employee name
+   private void employeeTaskQueryPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_expertSkillsQueryActionPerformed
+      m_queryChoice = 7;
+      String[] parameters = new String[1];
+      parameters[0] = txtEnterName.getText();
+      executeTasksQuery( m_queryChoice, parameters );
+   }
+   
+   // Query 8 - Insert new task with three parameters (show three JTextFields)
+   private void insertNewTask() {
+      
+      btnInserttask = new JButton("Insert New Task");
+      btnInserttask.setBounds(6, 74, 139, 29);
+         
+      btnInserttask.addActionListener(new ActionListener() {
+         public void actionPerformed(ActionEvent e) {
+            txtEnterName.setVisible(true);
+            txtEnterTaskName.setVisible(true);
+            txtEnterDeliver.setVisible(true);
+            txtEnterEmployeeid.setVisible(true);
+            
+            String[] head = {"Tip for Insert New Task: "};
+            DefaultTableModel model = new DefaultTableModel(head, 0);
+            taskListModel.clear();
+            head[0] = "Please type in TaskName, DeliverableID and EmployeeID. "
+            + "Press Enter⏎ to finish insert.";
+            model.addRow(head);
+            taskTable.setModel(model);
+         }
+      });    
+      panelTasksParams.add(btnInserttask);
+      btnInserttask.setEnabled(false);       
+   }
+
+   // Query 8 - Insert performed by Enter key
+   private void insertTaskPerformed(java.awt.event.ActionEvent evt) {
+      m_queryChoice = 8;
+      String[] param = new String[3];
+      param[0] = txtEnterTaskName.getText();
+      param[1] = txtEnterDeliver.getText();
+      param[2] = txtEnterEmployeeid.getText();
+      executeTasksUpdate( m_queryChoice, param);
+   }
+   
+   /**
+    * Takes in a query number and a parameter string to populate the 
+    * Tasks Table with the appropriate query
+    * @param m_queryChoice
+    * @param parameters
+    */
+   private void executeTasksQuery( int m_queryChoice, String[] parameters ) {
+      boolean bOK = true;
+      String[] headers;
+      String[][] allData;
+      bOK = queryrunner.ExecuteQuery(m_queryChoice, parameters);
+      if (bOK == true) {
+         headers = queryrunner.GetQueryHeaders();
+         allData = queryrunner.GetQueryData();
+         // Show output in the taskTable
+         updateTasksTableView(headers, allData);
+      }
+      else {
+         System.out.println("Not executable.");
+      }
+   }
+   
+   /**
+    * Takes in a query number and parameter strings to execute Insert action query.
+    * @param m_queryChoice
+    * @param parameters
+    */
+   private void executeTasksUpdate( int m_queryChoice, String[] parameters ) {
+      boolean bOK = true;       
+      bOK = queryrunner.ExecuteUpdate(m_queryChoice, parameters);
+      if (bOK == true) {
+         int updateAmount = queryrunner.GetUpdateAmount();
+         System.out.println("Number of rows updated: " + updateAmount);
+      }
+      else {
+         System.out.println("Not executable.");
+      }
+   }
+   
+   
+   /**
+    * Updates the Tasks Table with the headers and data
+    * @param headers column header
+    * @param allData values from tasks query
+    */
+   private void updateTasksTableView( String[] headers, String[][] allData ) {
+      int countRows = 0;
+      DefaultTableModel model = new DefaultTableModel(headers, 0);
+      taskListModel.clear();
+      for( int i = 0; i < allData.length; i++) {
+         model.addRow(allData[i]);
+         countRows++;
+      }
+      taskTable.setModel(model);
+        ((AbstractTableModel) model).fireTableDataChanged();
+      System.out.println("Data for Tasks, pulled " +  countRows + " rows");
+   }
+   
+   
+   // Welcome
 	private void initWelcomeLogo() {
 		lbLogo = new JLabel("");
 		lbLogo.setIcon(new ImageIcon(ManageUp.class.getResource(
@@ -358,6 +654,13 @@ public class ManageUp extends JFrame {
 		panelPMReview.setBounds(319, 0, 799, 693);
 		contentPane.add(panelPMReview);
 		panelPMReview.setLayout(null);
+		
+		btnIncompletetasks.setEnabled(true);
+      btnInserttask.setEnabled(true);
+      btnTasksOrderBy.setEnabled(true);
+		txtEnterTaskName.setVisible(false);
+      txtEnterDeliver.setVisible(false);
+      txtEnterEmployeeid.setVisible(false);
 	}
 
 	// Action for CheckSkill button
@@ -411,6 +714,9 @@ public class ManageUp extends JFrame {
 
 				btnTop5Skills.setEnabled(true);
 				btnExpertSkills.setEnabled(true);
+				btnIncompletetasks.setEnabled(true);
+			   btnInserttask.setEnabled(true);
+			   btnTasksOrderBy.setEnabled(true);
 				// Default data view after user logs in
 
 			}
@@ -430,68 +736,21 @@ public class ManageUp extends JFrame {
 				
 				btnTop5Skills.setEnabled(false);
 				btnExpertSkills.setEnabled(false);
+				btnIncompletetasks.setEnabled(false);
+            btnInserttask.setEnabled(false);
+            btnTasksOrderBy.setEnabled(false);
 				
 				textFieldEntry1.setVisible(false);
+				txtEnterName.setVisible(false);
+		      txtEnterTaskName.setVisible(false);
+		      txtEnterDeliver.setVisible(false);
+		      txtEnterEmployeeid.setVisible(false);
 				btnCheckProjects.setVisible(false);
 				btnCheckSkills.setVisible(false);
 				btnAbout.setVisible(false);
 			}
 		}
 	}// GEN-LAST:event_databaseConnectActionPerformed
-
-	/**
-	 * This event handler recognizes when the expert skills button has been
-	 * called
-	 * 
-	 * @param evt
-	 */
-	private void expertSkillsQueryActionPerformed(
-									java.awt.event.ActionEvent evt) {// GEN-FIRST:event_expertSkillsQueryActionPerformed
-		m_queryChoice = 1;
-		String[] parameters = new String[1];
-		parameters[0] = "%" + textFieldEntry1.getText() + "%";
-		executeSkillQuery(m_queryChoice, parameters);
-	}// GEN-LAST:event_expertSkillsQueryActionPerformed
-
-	/**
-	 * Takes in a query number and a parameter string to populate the Skills
-	 * Table with the appropriate query
-	 * 
-	 * @param m_queryChoice
-	 * @param parameters
-	 */
-	private void executeSkillQuery(int m_queryChoice, String[] parameters) {
-		boolean bOK = true;
-		String[] headers;
-		String[][] allData;
-		bOK = queryrunner.ExecuteQuery(m_queryChoice, parameters);
-		if (bOK == true) {
-			headers = queryrunner.GetQueryHeaders();
-			allData = queryrunner.GetQueryData();
-			updateSkillsTableView(headers, allData);
-		} else {
-			System.out.println("Not executable.");
-		}
-	}
-
-	/**
-	 * Updates the Skills Table with the headers and data
-	 * 
-	 * @param headers column header
-	 * @param allData values from skills query
-	 */
-	private void updateSkillsTableView(String[] headers, String[][] allData) {
-		int countRows = 0;
-		DefaultTableModel model = new DefaultTableModel(headers, 0);
-		skillListModel.clear();
-		for (int i = 0; i < allData.length; i++) {
-			model.addRow(allData[i]);
-			countRows++;
-		}
-		skillsTable.setModel(model);
-		((AbstractTableModel) model).fireTableDataChanged();
-		System.out.println("Data for Skills, pulled " + countRows + " rows");
-	}
 
 	/**
 	 * Colors
@@ -510,13 +769,15 @@ public class ManageUp extends JFrame {
 	private JPanel contentPane;
 	private JPanel panelLogin;
 	private JPanel panelSkills;
+	private JPanel panelPMReview;
 	private JPanel panelWelcome;
 
 	private JPanel panelTableSkills;
 	private JPanel panelTitleAndParams;
 
-	private JPanel panelTableTasks;
-	private JPanel panelPMReview;
+	private JPanel panelTableTasks;	
+	private JPanel panelTasksParams;
+   private JScrollPane scrollPane;
 
 	/*
 	 * User name and password
@@ -545,7 +806,11 @@ public class ManageUp extends JFrame {
 	private JButton btnTop5Skills;
 	private DefaultListModel<String> skillListModel;
 	private JTable skillsTable;
-	private DefaultTableModel skillModel;
+	private DefaultTableModel model;
+	private JTable taskTable;
+	private JButton btnIncompletetasks;
+   private JButton btnInserttask;
+   private JButton btnTasksOrderBy;
 	// For PM panel
 	private DefaultListModel<String> taskListModel;
 
@@ -553,7 +818,7 @@ public class ManageUp extends JFrame {
 	private JButton btnCheckProjects;
 	private JButton btnCheckSkills;
 	private JButton btnAbout;
-	private JButton[] btnNavigation;
+	private JButton[] btnNavigation;   
 	
 	/*
 	 * Database Queries
@@ -563,5 +828,8 @@ public class ManageUp extends JFrame {
 
 	private int m_queryChoice = 0; // This is the default query that was selected
 	private JTextField textFieldEntry1;
-	private JTextField textFieldEntry2;
+	private JTextField txtEnterName;
+   private JTextField txtEnterTaskName;
+   private JTextField txtEnterDeliver;
+   private JTextField txtEnterEmployeeid;
 }

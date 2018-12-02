@@ -24,11 +24,14 @@ public class QueryRunner {
 	 * by skill for those employees with over one year of experience in that skill.
 	 */
 	private void expertsQuery() {
+	   // queryArray[0]
 		queryArray.add(new QueryData("SELECT * FROM Employees_OverOneYearofExprience_bySkill"
 				, null, null, false, false)); 
+	   // queryArray[1]
 		queryArray.add(new QueryData("SELECT * FROM Employees_OverOneYearofExprience_bySkill "
 				+ "WHERE employee LIKE ?", new String[] { "Employee Name" }, new boolean[] { true }, 
 				false, true)); 
+	   // queryArray[2]
 		queryArray.add(new QueryData("SELECT * FROM Employees_OverOneYearofExprience_bySkill WHERE "
 				+ "skill_name LIKE ?", new String[] { "Skill Name" },
 				new boolean[] { true }, false, true));		
@@ -41,6 +44,7 @@ public class QueryRunner {
 	 * based on the number of employees related to each skill
 	 */
 	private void top5SkillsQuery() {
+	   // queryArray[3]
 		queryArray.add(new QueryData("SELECT * FROM Employees_TopFiveSkills"
 				, null, null, false, false)); 
 	}
@@ -55,6 +59,7 @@ public class QueryRunner {
 	 * skills.
 	 */
 	private void recentSkillUpdatesebyPMQuery() {
+	   // queryArray[4]
 		//recent skill updates for employees under PM
 		queryArray.add(new QueryData(
 				"   SELECT"   + 
@@ -84,6 +89,27 @@ public class QueryRunner {
 				new String[] { "PM First Name" }, new boolean[] { true }, false, true));
 	}
 	
+	private void IncompleteTasksQuery() {
+	   // queryArray[5]
+      queryArray.add(new QueryData("SELECT * FROM IncompleteTasks_ProjectsEndingThisMonth"
+      , null, null, false, false));
+   }
+   
+   private void EmployeeTasksQuery() {
+      // queryArray[6]
+      queryArray.add(new QueryData("SELECT * FROM Employee_TasksOrderByEndDate ", null, null, false, false));
+      // queryArray[7]
+      queryArray.add(new QueryData("SELECT * FROM Employee_TasksOrderByEndDate "
+      + "WHERE employee LIKE ?", new String[] { "First Name" }, new boolean[] { true }, false, true));
+   }
+   
+   private void InsertTaskQuery() {
+      // queryArray[8]
+      queryArray.add(new QueryData(
+      "INSERT INTO Tasks (task_name, deliverable_id, task_owner_user_id) VALUES (?,?,?)"
+      , new String [] {"Task Name", "Deliverable ID", "User ID"}, new boolean [] {false, false, false}, true, true));
+   }
+	
 	
 	public QueryRunner() {
 		this.jdbcData = new QueryJDBC();
@@ -93,6 +119,9 @@ public class QueryRunner {
 		expertsQuery();
 		top5SkillsQuery();
 		recentSkillUpdatesebyPMQuery();
+		IncompleteTasksQuery();
+      EmployeeTasksQuery();
+      InsertTaskQuery();
 	}
 
 	public int GetTotalQueries() {
