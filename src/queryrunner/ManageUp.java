@@ -109,14 +109,14 @@ public class ManageUp extends JFrame {
 		btnAbout = new JButton("About");
 		btnNavigation = new JButton[] { btnCheckProjects, btnCheckSkills, btnAbout };
 		
-		//Icon iconProject = IconFontSwing.buildIcon(FontAwesome.CALENDAR_CHECK_O, 15, Color.WHITE);
-		//btnCheckProjects.setIcon(iconProject);
+		Icon iconProject = IconFontSwing.buildIcon(FontAwesome.CALENDAR_CHECK_O, 15, Color.WHITE);
+		btnCheckProjects.setIcon(iconProject);
 		btnCheckProjects.setVisible(false);
 		btnCheckProjects.setFont(new Font("Lucida Grande", Font.BOLD, 14));
 		btnCheckProjects.setBackground(greyMU);
 		btnCheckProjects.setForeground(whiteMU);
 		btnCheckProjects.setOpaque(true);
-		btnCheckProjects.setBorderPainted(true);
+		btnCheckProjects.setBorderPainted(false);
 		btnCheckProjects.setBounds(56, 384, 200, 50);
 		panelLogin.add(btnCheckProjects);
 		btnCheckProjects.addActionListener(new ActionListener() {
@@ -127,14 +127,14 @@ public class ManageUp extends JFrame {
 		});
 
 		// Skill Assessment Report Button
-		//Icon iconWrench = IconFontSwing.buildIcon(FontAwesome.WRENCH, 15, Color.WHITE);
-		//btnCheckSkills.setIcon(iconWrench);
+		Icon iconWrench = IconFontSwing.buildIcon(FontAwesome.WRENCH, 15, Color.WHITE);
+		btnCheckSkills.setIcon(iconWrench);
 		btnCheckSkills.setVisible(false);
 		btnCheckSkills.setFont(new Font("Lucida Grande", Font.BOLD, 14));
 		btnCheckSkills.setBackground(greyMU);
 		btnCheckSkills.setForeground(whiteMU);
 		btnCheckSkills.setOpaque(true);
-		btnCheckSkills.setBorderPainted(true);
+		btnCheckSkills.setBorderPainted(false);
 		btnCheckSkills.setBounds(56, 322, 200, 50);
 		panelLogin.add(btnCheckSkills);
 		btnCheckSkills.addActionListener(new ActionListener() {
@@ -145,14 +145,14 @@ public class ManageUp extends JFrame {
 		});
 
 		// About Button
-		//Icon iconAbout = IconFontSwing.buildIcon(FontAwesome.WRENCH, 15, Color.WHITE);
-		//btnAbout.setIcon(iconAbout);
+		Icon iconAbout = IconFontSwing.buildIcon(FontAwesome.WRENCH, 15, Color.WHITE);
+		btnAbout.setIcon(iconAbout);
 		btnAbout.setVisible(false);
 		btnAbout.setFont(new Font("Lucida Grande", Font.BOLD, 14));		
 		btnAbout.setBackground(greyMU);
 		btnAbout.setForeground(whiteMU);
 		btnAbout.setOpaque(true);
-		btnAbout.setBorderPainted(true);
+		btnAbout.setBorderPainted(false);
 		btnAbout.setBounds(56, 446, 200, 50);
 		btnAbout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
