@@ -52,6 +52,10 @@ public class ManageUp extends JFrame {
 		queryrunner = queryrunnerObj;
 	}
 
+        /**
+	 * This is the constructor for the ContentPane. It will initialize the content pane and background colors.
+	 * 
+	 */
 	private void initContentPane() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1118, 723);
@@ -63,6 +67,10 @@ public class ManageUp extends JFrame {
 		contentPane.setLayout(null);
 	}
 
+	 /**
+	 * This is the constructor for the Home Page of the application.
+	 * 
+	 */
 	private void initHomePage() {
 		panelWelcome = new JPanel();
 		panelWelcome.setBackground(UIManager.getColor("Tree.textBackground"));
@@ -195,6 +203,10 @@ public class ManageUp extends JFrame {
 
 	}
 
+	/**
+	 * This changes the color of a button when it is clicked to show that it is clicked.
+	 * 
+	 */
 	private void changeBackgroundColorClick(JButton btn) {
 		Color currentColor = btn.getBackground();
 		if (currentColor == greyMU) {
@@ -207,15 +219,39 @@ public class ManageUp extends JFrame {
 		}
 	}
 
-	// Initialize Home page
+        /**
+	 * This is the constructor that creates the three different panels that will be accessed during the application.
+	 * 
+	 */
 	private void initPanels() {
 		IconFontSwing.register(FontAwesome.getIconFont());
 		initHomePage();
 		initSkillsPanel();
 		initPMPanel();
+//		//TO DO REMOVE
+//		getContentPane().remove(panelWelcome);
+//		getContentPane().remove(panelSkills);
+//		getContentPane().add(panelPMReview);
+//		repaint();
+//
+//		// Set background
+//		panelPMReview.setBackground(paleGreenMU);
+//		panelPMReview.setBounds(319, 0, 799, 693);
+//		contentPane.add(panelPMReview);
+//		panelPMReview.setLayout(null);
+//
+//		btnIncompletetasks.setEnabled(true);
+//		btnInserttask.setEnabled(true);
+//		btnTasksOrderBy.setEnabled(true);
+//		txtEnterTaskName.setVisible(false);
+//		txtEnterDeliver.setVisible(false);
+//		txtEnterEmployeeid.setVisible(false);
 	}
 
-	// Skill Panel
+	 /**
+	 * This is the constructor for the Skills Panel.
+	 * 
+	 */
 	private void initSkillsPanel() {
 		JLabel lblSkillsAssesment = new JLabel("Skills Assesment Report");
 		lblSkillsAssesment.setForeground(UIManager.getColor("ComboBox.foreground"));
@@ -269,7 +305,10 @@ public class ManageUp extends JFrame {
 
 	}
 
-	// Query 0 - Employees with Over One Year of Experience by Skill Set
+        /**
+	 * This function adds the expert skills query and button to the application.
+	 * 
+	 */
 	private void addExpertSkills() {
 		btnExpertSkills = new JButton("Experts");
 		btnExpertSkills.setForeground(whiteMU);
@@ -292,7 +331,10 @@ public class ManageUp extends JFrame {
 		btnExpertSkills.setEnabled(false);
 	}
 
-	// Query 3 - The Most Common Skillsets Shared Among Employees
+	/**
+	 * This function adds the top 5 skills query and button to the application.
+	 * 
+	 */
 	private void addTop5Skills() {
 		btnTop5Skills = new JButton("Top 5 Skills");
 		String title = "Top 5 Skills: The Most Common Skillsets Shared Among Employees";
@@ -314,6 +356,13 @@ public class ManageUp extends JFrame {
 		btnTop5Skills.setEnabled(false);
 	}
 
+        /**
+	 * This creates the table format for the data that will be pulled from the database.
+	 * 
+	 * @param table the table in which the data will be transferred to
+	 * @param panel the panel to which the data will be transferred
+	 * @param columnHeader the array of column titles from the database
+	 */ 
 	private void addTableFormat(JTable table, JPanel panel, String[] columnHeader) {
 		for (int i = 0; i < columnHeader.length; i++) {
 			TableColumn tc = table.getColumnModel().getColumn(i);
@@ -379,7 +428,10 @@ public class ManageUp extends JFrame {
 		System.out.println("Data for Skills, pulled " + countRows + " rows");
 	}
 
-	// Project panel
+	 /**
+	 * This function initiates the projects panel.
+	 * 
+	 */
 	private void initPMPanel() {
 
 		taskListModel = new DefaultListModel<String>();
@@ -474,7 +526,10 @@ public class ManageUp extends JFrame {
 		txtEnterEmployeeid.setVisible(false);
 	}
 
-	// Query 5 - Show incomplete tasks ending this month
+	/**
+	 * This function adds the incomplete tasks query and button to the application.
+	 * 
+	 */
 	private void addIncompleteTasks() {
 		btnIncompletetasks = new JButton("Incomplete Tasks This Month");
 		btnIncompletetasks.setBounds(0, 6, 257, 35);
@@ -496,7 +551,10 @@ public class ManageUp extends JFrame {
 		btnIncompletetasks.setEnabled(false);
 	}
 
-	// Query 6 - Show all tasks order by end date
+	/**
+	 * This function adds the "All Tasks" query and button to the application.
+	 * 
+	 */
 	private void addTasks() {
 
 		btnTasksOrderBy = new JButton("All Tasks");
@@ -519,7 +577,11 @@ public class ManageUp extends JFrame {
 		btnTasksOrderBy.setEnabled(false);
 	}
 
-	// Query 7 - Show tasks with input of one Employee name
+	/**
+	 * This function shows the tasks linked to an employee's name.
+	 * 
+	 * @param evt the Java AWT action event of entering an employee's name.
+	 */
 	private void employeeTaskQueryPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_expertSkillsQueryActionPerformed
 		m_queryChoice = 7;
 		String[] parameters = new String[1];
@@ -527,7 +589,10 @@ public class ManageUp extends JFrame {
 		executeTasksQuery(m_queryChoice, parameters);
 	}
 
-	// Query 8 - Insert new task with three parameters (show three JTextFields)
+	/**
+	 * This function allows a new task to be inserted into the database with three parameters.
+	 * 
+	 */
 	private void insertNewTask() {
 
 		btnInserttask = new JButton("Insert New Task");
@@ -556,7 +621,12 @@ public class ManageUp extends JFrame {
 		btnInserttask.setEnabled(false);
 	}
 
-	// Query 8 - Insert performed by Enter key
+
+	/**
+	 * This function allows a new task to be inserted into the database with three parameters.
+	 * 
+	 * @param evt The Java AWT event of clicking the button to enter the data.
+	 */
 	private void insertTaskPerformed(java.awt.event.ActionEvent evt) {
 		m_queryChoice = 8;
 		String[] param = new String[3];
@@ -624,14 +694,21 @@ public class ManageUp extends JFrame {
 		System.out.println("Data for Tasks, pulled " + countRows + " rows");
 	}
 
-	// Welcome
+	/**
+	 * Creates the Welcome Logo for the Home page.
+	 * 
+	 */
 	private void initWelcomeLogo() {
 		lbLogo = new JLabel("");
 		lbLogo.setIcon(new ImageIcon(ManageUp.class.getResource("/image/logodark_small.png")));
 		lbLogo.setBounds(24, 12, 280, 107);
 	}
 
-	// Initialize the db connection button and login
+
+	/**
+	 * Creates the setup for the user to enter their username and password.
+	 * 
+	 */
 	private void initUserNameAndPassword() {
 		btnDBConnect = new JButton("Connect");
 		btnDBConnect.setBounds(24, 164, 143, 35);
@@ -652,7 +729,11 @@ public class ManageUp extends JFrame {
 		panelLogin.add(passWord);
 	}
 
-	// Action for CheckProject button
+	/**
+	 * Shows the project panel once the user clicks on that panel
+	 *
+	 * @param evt - the act of the user clicking on the button.
+	 */
 	private void showPanelPM(java.awt.event.ActionEvent evt) {
 		/// Switch panel
 		getContentPane().remove(panelSkills);
@@ -673,7 +754,11 @@ public class ManageUp extends JFrame {
 		txtEnterEmployeeid.setVisible(false);
 	}
 
-	// Action for CheckSkill button
+	/**
+	 * Shows the skills panel once the user clicks on that panel
+	 *
+	 * @param evt - the act of the user clicking on the button.
+	 */
 	private void showPanelSkills(java.awt.event.ActionEvent evt) {
 
 		// Switch panel
