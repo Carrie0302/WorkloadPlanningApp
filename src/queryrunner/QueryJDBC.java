@@ -67,7 +67,6 @@ public class QueryJDBC {
 				}
 				preparedStatement.setString(i + 1, parm);
 			}
-			// preparedStatement.setString(1, "%" + szContact + "%");
 			resultSet = preparedStatement.executeQuery();
 
 			ResultSetMetaData rsmd = resultSet.getMetaData();
@@ -98,7 +97,6 @@ public class QueryJDBC {
 					allRows[0][i] = "";
 				}
 			}
-
 			preparedStatement.close();
 			resultSet.close();
 		}

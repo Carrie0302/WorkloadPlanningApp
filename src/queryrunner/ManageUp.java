@@ -5,7 +5,6 @@
  * This is free and unencumbered software released into the public domain.
  */
 package queryrunner;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;

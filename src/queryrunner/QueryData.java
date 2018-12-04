@@ -27,7 +27,6 @@ public class QueryData {
 		this.queryString = query;
 		this.arrayParms = parms;
 		this.arrayLikeParms = likeparms;
-		this.isAction = isAction;
 		this.isParms = isParm;
 	}
 
@@ -96,9 +95,6 @@ public class QueryData {
 	
 	/** The array of all parameters. */
 	private String[] arrayParms;
-	
-	/** Is it a action. */
-	private boolean isAction;
 	
 	/** Does it have parameters */
 	private boolean isParms;
