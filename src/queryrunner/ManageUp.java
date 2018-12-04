@@ -1,6 +1,5 @@
 /*
  * Team 5
-
  * CPSC 5021, Seattle University
  * This is free and unencumbered software released into the public domain.
  */
