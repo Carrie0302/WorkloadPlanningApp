@@ -100,6 +100,7 @@ public class QueryRunner {
       , null, null, false, false));
    }
    
+	
    private void EmployeeTasksQuery() {
       // queryArray[6]
       queryArray.add(new QueryData("SELECT "
@@ -125,7 +126,6 @@ public class QueryRunner {
       , new String [] {"Task Name", "Deliverable ID", "User ID"}, new boolean [] {false, false, false}, true, true));
    }
 	
-	
 	public QueryRunner() {
 		this.jdbcData = new QueryJDBC();
 		updateAmount = 0;
@@ -135,13 +135,10 @@ public class QueryRunner {
 		top5SkillsQuery();
 		recentSkillUpdatesebyPMQuery();
 		IncompleteTasksQuery();
-      EmployeeTasksQuery();
-      InsertTaskQuery();
+        EmployeeTasksQuery();
+        InsertTaskQuery();
 	}
 
-	public int GetTotalQueries() {
-		return queryArray.size();
-	}
 
 	public int GetParameterAmtForQuery(int queryChoice) {
 		QueryData e = queryArray.get(queryChoice);
@@ -182,11 +179,6 @@ public class QueryRunner {
 	 */
 	public String[][] GetQueryData() {
 		return jdbcData.GetData();
-	}
-	
-	public boolean isActionQuery(int queryChoice) {
-		QueryData e = queryArray.get(queryChoice);
-		return e.IsQueryAction();
 	}
 
 	public boolean isParameterQuery(int queryChoice) {

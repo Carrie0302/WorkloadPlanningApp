@@ -81,14 +81,6 @@ public class QueryData {
 		return arrayLikeParms;
 	}
 
-	/**
-	 * Checks if it is a query action.
-	 *
-	 * @return true, if query is an action
-	 */
-	boolean IsQueryAction() {
-		return isAction;
-	}
 
 	/**
 	 * Checks if is query parameter.

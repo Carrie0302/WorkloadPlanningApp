@@ -4,7 +4,6 @@
  * This is free and unencumbered software released into the public domain.
  */
 package queryrunner;
-
 import java.sql.Connection;
 import java.sql.*;
 import java.sql.DriverManager;
@@ -19,33 +18,33 @@ import java.util.ArrayList;
 
 public class QueryJDBC {
 
-	public Connection m_conn = null;
+	public Connection connection = null;
 	static final String DB_DRV = "com.mysql.cj.jdbc.Driver";
-	String m_error = "";
-	String m_url;
-	String m_user;
-	String[] m_headers;
-	String[][] m_allRows;
-	int m_updateAmount = 0;
+	String conError = "";
+	String url;
+	String userName;
+	String[] headers;
+	String[][] allRows;
+	int updateAmount = 0;
 
 	QueryJDBC() {
-		m_updateAmount = 0;
+		updateAmount = 0;
 	}
 
 	public String GetError() {
-		return m_error;
+		return conError;
 	}
 
 	public String[] GetHeaders() {
-		return this.m_headers;
+		return this.headers;
 	}
 
 	public String[][] GetData() {
-		return this.m_allRows;
+		return this.allRows;
 	}
 
 	public int GetUpdateCount() {
-		return m_updateAmount;
+		return updateAmount;
 	}
 
 	// We think we can always setString on Parameters. Not sure
@@ -59,7 +58,7 @@ public class QueryJDBC {
 		boolean bOK = true;
 		// Try to get the columns and the amount of columns
 		try {
-			preparedStatement = this.m_conn.prepareStatement(szQuery);
+			preparedStatement = this.connection.prepareStatement(szQuery);
 			int nParamAmount = parms.length;
 			for (int i = 0; i < nParamAmount; i++) {
 				String parm = parms[i];
@@ -73,10 +72,10 @@ public class QueryJDBC {
 
 			ResultSetMetaData rsmd = resultSet.getMetaData();
 			nColAmt = rsmd.getColumnCount();
-			m_headers = new String[nColAmt];
+			headers = new String[nColAmt];
 
 			for (int i = 0; i < nColAmt; i++) {
-				m_headers[i] = rsmd.getColumnLabel(i + 1);
+				headers[i] = rsmd.getColumnLabel(i + 1);
 			}
 
 			int amtRow = 0;
@@ -84,19 +83,19 @@ public class QueryJDBC {
 				amtRow++;
 			}
 			if (amtRow > 0) {
-				this.m_allRows = new String[amtRow][nColAmt];
+				this.allRows = new String[amtRow][nColAmt];
 				resultSet.beforeFirst();
 				int nCurRow = 0;
 				while (resultSet.next()) {
 					for (int i = 0; i < nColAmt; i++) {
-						m_allRows[nCurRow][i] = resultSet.getString(i + 1);
+						allRows[nCurRow][i] = resultSet.getString(i + 1);
 					}
 					nCurRow++;
 				}
 			} else {
-				this.m_allRows = new String[1][nColAmt];
+				this.allRows = new String[1][nColAmt];
 				for (int i = 0; i < nColAmt; i++) {
-					m_allRows[0][i] = "";
+					allRows[0][i] = "";
 				}
 			}
 
@@ -106,9 +105,9 @@ public class QueryJDBC {
 
 		catch (SQLException ex) {
 			bOK = false;
-			this.m_error = "SQLException: " + ex.getMessage();
-			this.m_error += "SQLState: " + ex.getSQLState();
-			this.m_error += "VendorError: " + ex.getErrorCode();
+			this.conError = "SQLException: " + ex.getMessage();
+			this.conError += "SQLState: " + ex.getSQLState();
+			this.conError += "VendorError: " + ex.getErrorCode();
 
 			System.out.println("SQLException: " + ex.getMessage());
 			System.out.println("SQLState: " + ex.getSQLState());
@@ -121,26 +120,24 @@ public class QueryJDBC {
 
 	public boolean ExecuteUpdate(String szQuery, String[] parms) {
 		PreparedStatement preparedStatement = null;
-		m_updateAmount = 0;
+		updateAmount = 0;
 
 		// Try to get the columns and the amount of columns
 		try {
-
-			preparedStatement = this.m_conn.prepareStatement(szQuery);
+			preparedStatement = this.connection.prepareStatement(szQuery);
 			int nParamAmount = parms.length;
 
 			for (int i = 0; i < nParamAmount; i++) {
 				preparedStatement.setString(i + 1, parms[i]);
 			}
-
-			m_updateAmount = preparedStatement.executeUpdate();
+			updateAmount = preparedStatement.executeUpdate();
 			preparedStatement.close();
 		}
 
 		catch (SQLException ex) {
-			this.m_error = "SQLException: " + ex.getMessage();
-			this.m_error += "SQLState: " + ex.getSQLState();
-			this.m_error += "VendorError: " + ex.getErrorCode();
+			this.conError = "SQLException: " + ex.getMessage();
+			this.conError += "SQLState: " + ex.getSQLState();
+			this.conError += "VendorError: " + ex.getErrorCode();
 
 			System.out.println("SQLException: " + ex.getMessage());
 			System.out.println("SQLState: " + ex.getSQLState());
@@ -161,14 +158,14 @@ public class QueryJDBC {
 		try {
 
 			Class.forName(DB_DRV).newInstance();
-			m_conn = DriverManager.getConnection(url, user, pass);
+			connection = DriverManager.getConnection(url, user, pass);
 
 		} catch (SQLException ex) {
-			m_error = "SQLException: " + ex.getMessage() + ex.getSQLState() + ex.getErrorCode();
+			conError = "SQLException: " + ex.getMessage() + ex.getSQLState() + ex.getErrorCode();
 			return false;
 		} catch (Exception ex) {
 			// handle the error
-			m_error = "SQLException: " + ex.getMessage();
+			conError = "SQLException: " + ex.getMessage();
 		}
 
 		return true;
@@ -180,14 +177,14 @@ public class QueryJDBC {
 	 */
 	public boolean CloseDatabase() {
 		try {
-			m_conn.close();
+			connection.close();
 		} catch (SQLException ex) {
-			m_error = "SQLException: " + ex.getMessage();
-			m_error = "SQLState: " + ex.getSQLState();
-			m_error = "VendorError: " + ex.getErrorCode();
+			conError = "SQLException: " + ex.getMessage();
+			conError = "SQLState: " + ex.getSQLState();
+			conError = "VendorError: " + ex.getErrorCode();
 			return false;
 		} catch (Exception ex) {
-			m_error = "Error was " + ex.toString();
+			conError = "Error was " + ex.toString();
 			return false;
 		}
 

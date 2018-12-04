@@ -214,24 +214,6 @@ public class ManageUp extends JFrame {
 		initHomePage();
 		initSkillsPanel();
 		initPMPanel();
-//		//TO DO REMOVE
-//		getContentPane().remove(panelWelcome);
-//		getContentPane().remove(panelSkills);
-//		getContentPane().add(panelPMReview);
-//		repaint();
-//
-//		// Set background
-//		panelPMReview.setBackground(paleGreenMU);
-//		panelPMReview.setBounds(319, 0, 799, 693);
-//		contentPane.add(panelPMReview);
-//		panelPMReview.setLayout(null);
-//
-//		btnIncompletetasks.setEnabled(true);
-//		btnInserttask.setEnabled(true);
-//		btnTasksOrderBy.setEnabled(true);
-//		txtEnterTaskName.setVisible(false);
-//		txtEnterDeliver.setVisible(false);
-//		txtEnterEmployeeid.setVisible(false);
 	}
 
 	// Skill Panel
