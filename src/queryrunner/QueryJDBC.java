@@ -12,45 +12,88 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 /**
+ * The Class QueryJDBC makes a connection to the database.
  *
  * @author mckeem, carrie
  */
 
 public class QueryJDBC {
 
+	/** The connection. */
 	public Connection connection = null;
+	
+	/** The database drive. */
 	static final String DB_DRV = "com.mysql.cj.jdbc.Driver";
+	
+	/** The connection error. */
 	String conError = "";
+	
+	/** The url. */
 	String url;
+	
+	/** The user name. */
 	String userName;
+	
+	/** The headers. */
 	String[] headers;
+	
+	/** The all rows. */
 	String[][] allRows;
+	
+	/** The update amount. */
 	int updateAmount = 0;
 
+	/**
+	 * Instantiates a new query JDBC.
+	 */
 	QueryJDBC() {
 		updateAmount = 0;
 	}
 
+	/**
+	 * Gets the error.
+	 *
+	 * @return the string
+	 */
 	public String GetError() {
 		return conError;
 	}
 
+	/**
+	 * Gets the headers.
+	 *
+	 * @return the string[] headers
+	 */
 	public String[] GetHeaders() {
 		return this.headers;
 	}
 
+	/**
+	 * Gets the data.
+	 *
+	 * @return the string[][] with data
+	 */
 	public String[][] GetData() {
 		return this.allRows;
 	}
 
+	/**
+	 * Gets the update count.
+	 *
+	 * @return the amount of rows updated
+	 */
 	public int GetUpdateCount() {
 		return updateAmount;
 	}
 
-	// We think we can always setString on Parameters. Not sure
-	// if this is true.
-	// GetString on Results is fine though
-
+	/**
+	 * Execute query.
+	 *
+	 * @param szQuery the query
+	 * @param parms the parameters
+	 * @param likeparms the parameters using like
+	 * @return true, if successful
+	 */
 	public boolean ExecuteQuery(String szQuery, String[] parms, boolean[] likeparms) {
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -68,7 +111,6 @@ public class QueryJDBC {
 				preparedStatement.setString(i + 1, parm);
 			}
 			resultSet = preparedStatement.executeQuery();
-
 			ResultSetMetaData rsmd = resultSet.getMetaData();
 			nColAmt = rsmd.getColumnCount();
 			headers = new String[nColAmt];
@@ -116,11 +158,17 @@ public class QueryJDBC {
 		return true;
 	}
 
+	/**
+	 * Execute update.
+	 *
+	 * @param szQuery the query
+	 * @param parms the parameters
+	 * @return true, if successful
+	 */
 	public boolean ExecuteUpdate(String szQuery, String[] parms) {
 		PreparedStatement preparedStatement = null;
 		updateAmount = 0;
-
-		// Try to get the columns and the amount of columns
+		//Get the columns and the amount of columns
 		try {
 			preparedStatement = this.connection.prepareStatement(szQuery);
 			int nParamAmount = parms.length;
@@ -131,12 +179,10 @@ public class QueryJDBC {
 			updateAmount = preparedStatement.executeUpdate();
 			preparedStatement.close();
 		}
-
 		catch (SQLException ex) {
 			this.conError = "SQLException: " + ex.getMessage();
 			this.conError += "SQLState: " + ex.getSQLState();
 			this.conError += "VendorError: " + ex.getErrorCode();
-
 			System.out.println("SQLException: " + ex.getMessage());
 			System.out.println("SQLState: " + ex.getSQLState());
 			System.out.println("VendorError: " + ex.getErrorCode());
@@ -146,6 +192,15 @@ public class QueryJDBC {
 		return true;
 	}
 
+	/**
+	 * Connect to database.
+	 *
+	 * @param host the host
+	 * @param user the user
+	 * @param pass the pass
+	 * @param database the database
+	 * @return true, if successful
+	 */
 	public boolean ConnectToDatabase(String host, String user, String pass, String database) {
 		String url;
 		url = "jdbc:mysql://";
@@ -154,7 +209,6 @@ public class QueryJDBC {
 		url += database;
 		url += "?useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 		try {
-
 			Class.forName(DB_DRV).newInstance();
 			connection = DriverManager.getConnection(url, user, pass);
 
@@ -165,12 +219,13 @@ public class QueryJDBC {
 			// handle the error
 			conError = "SQLException: " + ex.getMessage();
 		}
-
 		return true;
 	}
 
 	/**
-	 * Closes the database connection and throws 
+	 * Closes the database connection and throws .
+	 *
+	 * @return true, if successful
 	 * @returns false if the connection was not closed
 	 */
 	public boolean CloseDatabase() {

@@ -52,7 +52,7 @@ public class ManageUp extends JFrame {
 		queryrunner = queryrunnerObj;
 	}
 
-        /**
+    /**
 	 * This is the constructor for the ContentPane. It will initialize the content pane and background colors.
 	 * 
 	 */
@@ -204,7 +204,8 @@ public class ManageUp extends JFrame {
 	}
 
 	/**
-	 * This changes the color of a button when it is clicked to show that it is clicked.
+	 * This changes the color of a button when it is clicked to show 
+	 * that it is clicked.
 	 * 
 	 */
 	private void changeBackgroundColorClick(JButton btn) {
@@ -219,8 +220,9 @@ public class ManageUp extends JFrame {
 		}
 	}
 
-        /**
-	 * This is the constructor that creates the three different panels that will be accessed during the application.
+   /**
+	 * This is the constructor that creates the three different panels that 
+	 * will be accessed during the application.
 	 * 
 	 */
 	private void initPanels() {
@@ -228,27 +230,9 @@ public class ManageUp extends JFrame {
 		initHomePage();
 		initSkillsPanel();
 		initPMPanel();
-//		//TO DO REMOVE
-//		getContentPane().remove(panelWelcome);
-//		getContentPane().remove(panelSkills);
-//		getContentPane().add(panelPMReview);
-//		repaint();
-//
-//		// Set background
-//		panelPMReview.setBackground(paleGreenMU);
-//		panelPMReview.setBounds(319, 0, 799, 693);
-//		contentPane.add(panelPMReview);
-//		panelPMReview.setLayout(null);
-//
-//		btnIncompletetasks.setEnabled(true);
-//		btnInserttask.setEnabled(true);
-//		btnTasksOrderBy.setEnabled(true);
-//		txtEnterTaskName.setVisible(false);
-//		txtEnterDeliver.setVisible(false);
-//		txtEnterEmployeeid.setVisible(false);
 	}
 
-	 /**
+	/**
 	 * This is the constructor for the Skills Panel.
 	 * 
 	 */
@@ -305,7 +289,7 @@ public class ManageUp extends JFrame {
 
 	}
 
-        /**
+    /**
 	 * This function adds the expert skills query and button to the application.
 	 * 
 	 */
@@ -356,8 +340,9 @@ public class ManageUp extends JFrame {
 		btnTop5Skills.setEnabled(false);
 	}
 
-        /**
-	 * This creates the table format for the data that will be pulled from the database.
+    /**
+	 * This creates the table format for the data that will be pulled from 
+	 * the database.
 	 * 
 	 * @param table the table in which the data will be transferred to
 	 * @param panel the panel to which the data will be transferred
@@ -510,7 +495,8 @@ public class ManageUp extends JFrame {
 				String[] head = { "Tip for Check Your Insert: " };
 				DefaultTableModel model = new DefaultTableModel(head, 0);
 				taskListModel.clear();
-				head[0] = "Type in task owner name in EmployeeName " + "textfield and press Enter⏎. "
+				head[0] = "Type in task owner name in EmployeeName " 
+						+ "textfield and press Enter⏎. "
 						+ "You will see the newly-inserted task at the end.";
 				model.addRow(head);
 				taskTable.setModel(model);
@@ -706,7 +692,7 @@ public class ManageUp extends JFrame {
 
 
 	/**
-	 * Creates the setup for the user to enter their username and password.
+	 * Creates the setup for the user to enter their user name and password.
 	 * 
 	 */
 	private void initUserNameAndPassword() {
