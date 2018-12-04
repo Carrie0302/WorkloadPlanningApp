@@ -7,7 +7,8 @@ package queryrunner;
 import java.util.ArrayList;
 
 /**
- * The Class QueryData creates query objects with the associated parameters.
+ * The Class QueryData creates query objects 
+ * with the associated parameters.
  *
  * @author mckeem, carrie
  */
@@ -18,16 +19,15 @@ public class QueryData {
 	 * Instantiates a new query data.
 	 *
 	 * @param query the query
-	 * @param parms the parms
-	 * @param likeparms the likeparms
+	 * @param parms the parameters
+	 * @param likeparms the parameters using like
 	 * @param isAction the is action
-	 * @param isParm the is parm
+	 * @param isParm the is parameters
 	 */
 	QueryData(String query, String[] parms, boolean[] likeparms, boolean isAction, boolean isParm) {
 		this.queryString = query;
 		this.arrayParms = parms;
 		this.arrayLikeParms = likeparms;
-		this.isAction = isAction;
 		this.isParms = isParm;
 	}
 
@@ -96,9 +96,6 @@ public class QueryData {
 	
 	/** The array of all parameters. */
 	private String[] arrayParms;
-	
-	/** Is it a action. */
-	private boolean isAction;
 	
 	/** Does it have parameters */
 	private boolean isParms;

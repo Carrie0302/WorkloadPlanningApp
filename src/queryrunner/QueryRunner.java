@@ -41,7 +41,7 @@ public class QueryRunner {
 	/**
 	 * Top 5 Skills Query
 	 * Shows the top five skills owned by employees in descending order
-	 * based on the number of employees related to each skill
+	 * based on the number of employees related to each skill.
 	 */
 	private void top5SkillsQuery() {
 	   // queryArray[3]
@@ -89,36 +89,50 @@ public class QueryRunner {
 				new String[] { "PM First Name" }, new boolean[] { true }, false, true));
 	}
 	
+	/**
+	 * Incomplete tasks query.
+	 */
 	private void IncompleteTasksQuery() {
 	   // queryArray[5]
       queryArray.add(new QueryData("SELECT task_name as 'Task',   "
       		+ "  days_before_project_end as 'Days before Project Ends',"
       		+ "	 project_end_date as 'Project Ends',"
-      		+ "  blockers_flagged as 'Blockers Flagged', deliverable_name as 'Deliverable', "
+      		+ "  blockers_flagged as 'Blockers Flagged',"
+      		+ "  deliverable_name as 'Deliverable', "
       		+ "  project_name as 'Project', project_manager as 'Manager'"
       		+ "  FROM IncompleteTasks_ProjectsEndingThisMonth"
       , null, null, false, false));
    }
    
 	
+   /**
+    * Employee tasks query.
+    */
    private void EmployeeTasksQuery() {
       // queryArray[6]
       queryArray.add(new QueryData("SELECT "
       		+ "task_name as 'Task', end_time as 'Finish Date', "
-      		+ "expected_time_to_complete as 'Excpected Completion Time', real_time_to_complete 'Real Completion Time', "
-      		+ "blockers_flagged as 'Blockers', difficulty_rate_id as 'Difficulty Rating'"
-      		+ ", employee as 'Employee'"
+      		+ "expected_time_to_complete as 'Excpected Completion Time', "
+      		+ "real_time_to_complete 'Real Completion Time', "
+      		+ "blockers_flagged as 'Blockers', "
+      		+ "difficulty_rate_id as 'Difficulty Rating',"
+      		+ "employee as 'Employee'"
       		+ " FROM Employee_TasksOrderByEndDate ", null, null, false, false));
       // queryArray[7]
       queryArray.add(new QueryData("SELECT "
-        		+ "task_name as 'Task', end_time as 'Finish Date', "
-          		+ "expected_time_to_complete as 'Excpected Completion Time', real_time_to_complete 'Real Completion Time', "
-          		+ "blockers_flagged as 'Blockers', difficulty_rate_id as 'Difficulty Rating'"
-          		+ ", employee as 'Employee'"
+    			+ "task_name as 'Task', end_time as 'Finish Date', "
+          		+ "expected_time_to_complete as 'Excpected Completion Time', "
+          		+ "real_time_to_complete 'Real Completion Time', "
+          		+ "blockers_flagged as 'Blockers', "
+          		+ "difficulty_rate_id as 'Difficulty Rating',"
+          		+ "employee as 'Employee'"
       		+ " FROM Employee_TasksOrderByEndDate "
       + "WHERE employee LIKE ?", new String[] { "First Name" }, new boolean[] { true }, false, true));
    }
    
+   /**
+    * Insert task query.
+    */
    private void InsertTaskQuery() {
       // queryArray[8]
       queryArray.add(new QueryData(
@@ -126,6 +140,9 @@ public class QueryRunner {
       , new String [] {"Task Name", "Deliverable ID", "User ID"}, new boolean [] {false, false, false}, true, true));
    }
 	
+	/**
+	 * Instantiates a new query runner.
+	 */
 	public QueryRunner() {
 		this.jdbcData = new QueryJDBC();
 		updateAmount = 0;
@@ -140,20 +157,33 @@ public class QueryRunner {
 	}
 
 
+	/**
+	 * Gets the parameter amount for a query.
+	 *
+	 * @param queryChoice the query choice
+	 * @return the index of the query in the array
+	 */
 	public int GetParameterAmtForQuery(int queryChoice) {
 		QueryData e = queryArray.get(queryChoice);
 		return e.GetParmAmount();
 	}
 
+	/**
+	 * Gets the parameter text.
+	 *
+	 * @param queryChoice the query choice
+	 * @param parmnum the parmnum
+	 * @return the string
+	 */
 	public String GetParamText(int queryChoice, int parmnum) {
 		QueryData e = queryArray.get(queryChoice);
 		return e.GetParamText(parmnum);
 	}
 
 	/**
-	 * Function will return how many rows were updated as a result of the update
-	 * query
-	 * 
+	 * Function will return how many rows were updated 
+	 * as a result of the update query.
+	 *
 	 * @return Returns how many rows were updated
 	 */
 	public int GetUpdateAmount() {
@@ -161,8 +191,8 @@ public class QueryRunner {
 	}
 
 	/**
-	 * Function will return ALL of the Column Headers from the query
-	 * 
+	 * Function will return ALL of the Column Headers from the query.
+	 *
 	 * @return Returns array of column headers
 	 */
 	public String[] GetQueryHeaders() {
@@ -181,11 +211,24 @@ public class QueryRunner {
 		return jdbcData.GetData();
 	}
 
+	/**
+	 * Checks if is parameter query.
+	 *
+	 * @param queryChoice the query choice
+	 * @return true, if is parameter query
+	 */
 	public boolean isParameterQuery(int queryChoice) {
 		QueryData e = queryArray.get(queryChoice);
 		return e.IsQueryParm();
 	}
 
+	/**
+	 * Execute query.
+	 *
+	 * @param queryChoice the query choice
+	 * @param parms the parms
+	 * @return true, if successful
+	 */
 	public boolean ExecuteQuery(int queryChoice, String[] parms) {
 		boolean bOK = true;
 		QueryData e = queryArray.get(queryChoice);
@@ -193,6 +236,13 @@ public class QueryRunner {
 		return bOK;
 	}
 
+	/**
+	 * Execute update.
+	 *
+	 * @param queryChoice the query choice
+	 * @param parms the parms
+	 * @return true, if successful
+	 */
 	public boolean ExecuteUpdate(int queryChoice, String[] parms) {
 		boolean bOK = true;
 		QueryData e = queryArray.get(queryChoice);
@@ -201,6 +251,15 @@ public class QueryRunner {
 		return bOK;
 	}
 
+	/**
+	 * Connect.
+	 *
+	 * @param szHost the sz host
+	 * @param szUser the sz user
+	 * @param szPass the sz pass
+	 * @param szDatabase the sz database
+	 * @return true, if successful
+	 */
 	public boolean Connect(String szHost, String szUser, String szPass, String szDatabase) {
 		boolean bConnect = jdbcData.ConnectToDatabase(szHost, szUser, szPass, szDatabase);
 		if (bConnect == false)
@@ -208,6 +267,11 @@ public class QueryRunner {
 		return bConnect;
 	}
 
+	/**
+	 * Disconnect.
+	 *
+	 * @return true, if successful
+	 */
 	public boolean Disconnect() {
 		boolean bConnect = jdbcData.CloseDatabase();
 		if (bConnect == false)
@@ -215,16 +279,30 @@ public class QueryRunner {
 		return true;
 	}
 
+	/**
+	 * Gets the error.
+	 *
+	 * @return the string
+	 */
 	public String GetError() {
 		return error;
 	}
 
+	/** The jdbc data. */
 	private QueryJDBC jdbcData;
+	
+	/** The error. */
 	private String error;
+	
+	/** The query array. */
 	private ArrayList<QueryData> queryArray;
+	
+	/** The update amount. */
 	private int updateAmount;
 
 	/**
+	 * The main method.
+	 *
 	 * @param args the command line arguments
 	 */
 	public static void main(String[] args) {

@@ -1,11 +1,9 @@
 /*
  * Team 5
-
  * CPSC 5021, Seattle University
  * This is free and unencumbered software released into the public domain.
  */
 package queryrunner;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -14,7 +12,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-
 import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -33,7 +30,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
-
 import jiconfont.icons.FontAwesome;
 import jiconfont.swing.IconFontSwing;
 
@@ -54,6 +50,7 @@ public class ManageUp extends JFrame {
 		initWelcomeLogo();
 		queryrunner = queryrunnerObj;
 	}
+
 
 	/**
 	 * This is the constructor for the ContentPane. It will initialize the
@@ -214,8 +211,8 @@ public class ManageUp extends JFrame {
 	}
 
 	/**
-	 * This changes the color of a button when it is clicked to show that it is
-	 * clicked.
+	 * This changes the color of a button when it is clicked to show 
+	 * that it is clicked.
 	 * 
 	 */
 	private void changeBackgroundColorClick(JButton btn) {
@@ -241,24 +238,6 @@ public class ManageUp extends JFrame {
 		initSkillsPanel();
 		initPMPanel();
 		initAboutPanel();
-//		//TO DO REMOVE
-//		getContentPane().remove(panelWelcome);
-//		getContentPane().remove(panelSkills);
-//		getContentPane().add(panelPMReview);
-//		repaint();
-//
-//		// Set background
-//		panelPMReview.setBackground(paleGreenMU);
-//		panelPMReview.setBounds(319, 0, 799, 693);
-//		contentPane.add(panelPMReview);
-//		panelPMReview.setLayout(null);
-//
-//		btnIncompletetasks.setEnabled(true);
-//		btnInserttask.setEnabled(true);
-//		btnTasksOrderBy.setEnabled(true);
-//		txtEnterTaskName.setVisible(false);
-//		txtEnterDeliver.setVisible(false);
-//		txtEnterEmployeeid.setVisible(false);
 	}
 
 	/**
@@ -321,7 +300,8 @@ public class ManageUp extends JFrame {
 
 	}
 
-	/**
+
+    /**
 	 * This function adds the expert skills query and button to the application.
 	 * 
 	 */
@@ -372,10 +352,10 @@ public class ManageUp extends JFrame {
 		btnTop5Skills.setEnabled(false);
 	}
 
-	/**
-	 * This creates the table format for the data that will be pulled from the
-	 * database.
-	 * 
+    /**
+	 * This creates the table format for the data that will be pulled from 
+	 * the database.
+	 * 	  
 	 * @param table        the table in which the data will be transferred to
 	 * @param panel        the panel to which the data will be transferred
 	 * @param columnHeader the array of column titles from the database
@@ -534,9 +514,10 @@ public class ManageUp extends JFrame {
 				String[] head = { "Tip for Check Your Insert: " };
 				DefaultTableModel model = new DefaultTableModel(head, 0);
 				taskListModel.clear();
-				head[0] = "Type in task owner name in EmployeeName "
-												+ "textfield and press Enter⏎. "
-												+ "You will see the newly-inserted task at the end.";
+
+				head[0] = "Type in task owner name in EmployeeName " 
+						+ "textfield and press Enter⏎. "
+						+ "You will see the newly-inserted task at the end.";
 				model.addRow(head);
 				taskTable.setModel(model);
 				System.out.println("The entered text is: " + txtEnterEmployeeid
@@ -736,7 +717,7 @@ public class ManageUp extends JFrame {
 	}
 
 	/**
-	 * Creates the setup for the user to enter their username and password.
+	 * Creates the setup for the user to enter their user name and password.
 	 * 
 	 */
 	private void initUserNameAndPassword() {
