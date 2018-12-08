@@ -16,32 +16,10 @@ import java.util.ArrayList;
  *
  * @author mckeem, carrie
  */
-
 public class QueryJDBC {
 
 	/** The connection. */
 	public Connection connection = null;
-	
-	/** The database drive. */
-	static final String DB_DRV = "com.mysql.cj.jdbc.Driver";
-	
-	/** The connection error. */
-	String conError = "";
-	
-	/** The url. */
-	String url;
-	
-	/** The user name. */
-	String userName;
-	
-	/** The headers. */
-	String[] headers;
-	
-	/** The all rows. */
-	String[][] allRows;
-	
-	/** The update amount. */
-	int updateAmount = 0;
 
 	/**
 	 * Instantiates a new query JDBC.
@@ -92,13 +70,13 @@ public class QueryJDBC {
 	 * @param szQuery the query
 	 * @param parms the parameters
 	 * @param likeparms the parameters using like
-	 * @return true, if successful
+	 * @return true if executed successfully
 	 */
 	public boolean ExecuteQuery(String szQuery, String[] parms, boolean[] likeparms) {
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		int nColAmt;
-		boolean bOK = true;
+
 		// Try to get the columns and the amount of columns
 		try {
 			preparedStatement = this.connection.prepareStatement(szQuery);
@@ -113,38 +91,14 @@ public class QueryJDBC {
 			resultSet = preparedStatement.executeQuery();
 			ResultSetMetaData rsmd = resultSet.getMetaData();
 			nColAmt = rsmd.getColumnCount();
-			headers = new String[nColAmt];
-
-			for (int i = 0; i < nColAmt; i++) {
-				headers[i] = rsmd.getColumnLabel(i + 1);
-			}
-
-			int amtRow = 0;
-			while (resultSet.next()) {
-				amtRow++;
-			}
-			if (amtRow > 0) {
-				this.allRows = new String[amtRow][nColAmt];
-				resultSet.beforeFirst();
-				int nCurRow = 0;
-				while (resultSet.next()) {
-					for (int i = 0; i < nColAmt; i++) {
-						allRows[nCurRow][i] = resultSet.getString(i + 1);
-					}
-					nCurRow++;
-				}
-			} else {
-				this.allRows = new String[1][nColAmt];
-				for (int i = 0; i < nColAmt; i++) {
-					allRows[0][i] = "";
-				}
-			}
+			
+			pullHeaders( rsmd, nColAmt );
+			pullData( resultSet, nColAmt );
+		
 			preparedStatement.close();
 			resultSet.close();
 		}
-
 		catch (SQLException ex) {
-			bOK = false;
 			this.conError = "SQLException: " + ex.getMessage();
 			this.conError += "SQLState: " + ex.getSQLState();
 			this.conError += "VendorError: " + ex.getErrorCode();
@@ -157,13 +111,14 @@ public class QueryJDBC {
 		}
 		return true;
 	}
-
+	
+	
 	/**
 	 * Execute update.
 	 *
 	 * @param szQuery the query
 	 * @param parms the parameters
-	 * @return true, if successful
+	 * @return true if executed successfully
 	 */
 	public boolean ExecuteUpdate(String szQuery, String[] parms) {
 		PreparedStatement preparedStatement = null;
@@ -199,10 +154,9 @@ public class QueryJDBC {
 	 * @param user the user
 	 * @param pass the pass
 	 * @param database the database
-	 * @return true, if successful
+	 * @return true if connected to database successfully
 	 */
 	public boolean ConnectToDatabase(String host, String user, String pass, String database) {
-		String url;
 		url = "jdbc:mysql://";
 		url += host;
 		url += ":3306/";
@@ -242,6 +196,66 @@ public class QueryJDBC {
 		}
 
 		return true;
+	}
+	
+	
+	/** The database drive. */
+	private static final String DB_DRV = "com.mysql.cj.jdbc.Driver";
+	
+	/** The connection error. */
+	private String conError = "";
+	
+	/** The url. */
+	private String url;
+	
+	/** The headers. */
+	private String[] headers;
+	
+	/** All rows from query results. */
+	private String[][] allRows;
+	
+	/** The update amount. */
+	private int updateAmount = 0;
+
+
+	/**
+	 * Populates the array with the queries data
+	 * @param resultSet SQL results
+	 * @param nColAmt column count in results
+	 * @throws SQLException
+	 */
+	private void pullData(ResultSet resultSet, int nColAmt) throws SQLException {
+		//Get row count
+		resultSet.last();
+		int amtRow = resultSet.getRow();
+		resultSet.beforeFirst();
+		
+		this.allRows = new String[amtRow][nColAmt];
+		
+		//Add data to array
+		int nCurRow = 0;
+		while (resultSet.next()) {
+			for (int i = 0; i < nColAmt; i++) {
+				allRows[nCurRow][i] = resultSet.getString(i + 1);
+			}
+			nCurRow++;
+		}
+	}
+	
+	/**
+	 * Populates the array with column names from query
+	 * @param rsmd the meta data of the result set
+	 * @param nColAmt number of columns
+	 * @throws SQLException
+	 */
+	private void pullHeaders(ResultSetMetaData rsmd, int nColAmt) throws SQLException {
+		//Get headers
+		String colName = "";
+		headers = new String[nColAmt];
+		for (int i = 0; i < nColAmt; i++) {
+			colName = rsmd.getColumnLabel(i + 1);
+			headers[i] = colName.replaceAll("_", " ");
+		}
 	}
 
 }

@@ -33,6 +33,11 @@ import javax.swing.table.TableColumn;
 import jiconfont.icons.FontAwesome;
 import jiconfont.swing.IconFontSwing;
 
+/**
+ * The GUI tool for accessing the ManageUp database
+ * @author carrie, yi, tong, hannah
+ *
+ */
 public class ManageUp extends JFrame {
 
 	/**

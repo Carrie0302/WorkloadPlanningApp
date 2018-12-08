@@ -4,7 +4,6 @@
  * This is free and unencumbered software released into the public domain.
  */
 package queryrunner;
-
 import java.util.ArrayList;
 
 /**
@@ -22,6 +21,7 @@ public class QueryRunner {
 	 * Experts Query
 	 * Shows employee names and the number of years of experience
 	 * by skill for those employees with over one year of experience in that skill.
+	 * This is a view in the datbase.
 	 */
 	private void expertsQuery() {
 	   // queryArray[0]
@@ -42,6 +42,7 @@ public class QueryRunner {
 	 * Top 5 Skills Query
 	 * Shows the top five skills owned by employees in descending order
 	 * based on the number of employees related to each skill.
+	 * This is a view in the database.
 	 */
 	private void top5SkillsQuery() {
 	   // queryArray[3]
@@ -51,7 +52,7 @@ public class QueryRunner {
 	
 	
 	/**
-	 * Recent Skill Updates For Staff Working on Projects for a Manager
+	 * Recent Skill Updates For Staff Working on ProjecqueryChoicets for a Manager
 	 * Shows the most recent skill updates for each staff working on the
 	 * projects managed by certain project manager. Note: The query first identified the staff working on
 	 * tasks under deliverables that belong to each project managed by Aarika Paike. Then
@@ -91,8 +92,9 @@ public class QueryRunner {
 	
 	/**
 	 * Incomplete tasks query.
+	 * This is a view in the database.
 	 */
-	private void IncompleteTasksQuery() {
+	private void incompleteTasksQuery() {
 	   // queryArray[5]
       queryArray.add(new QueryData("SELECT task_name as 'Task',   "
       		+ "  days_before_project_end as 'Days before Project Ends',"
@@ -107,8 +109,9 @@ public class QueryRunner {
 	
    /**
     * Employee tasks query.
+    * This is a view in the database.
     */
-   private void EmployeeTasksQuery() {
+   private void employeeTasksQuery() {
       // queryArray[6]
       queryArray.add(new QueryData("SELECT "
       		+ "task_name as 'Task', end_time as 'Finish Date', "
@@ -133,7 +136,7 @@ public class QueryRunner {
    /**
     * Insert task query.
     */
-   private void InsertTaskQuery() {
+   private void insertTaskQuery() {
       // queryArray[8]
       queryArray.add(new QueryData(
       "INSERT INTO Tasks (task_name, deliverable_id, task_owner_user_id) VALUES (?,?,?)"
@@ -151,9 +154,9 @@ public class QueryRunner {
 		expertsQuery();
 		top5SkillsQuery();
 		recentSkillUpdatesebyPMQuery();
-		IncompleteTasksQuery();
-        EmployeeTasksQuery();
-        InsertTaskQuery();
+		incompleteTasksQuery();
+        employeeTasksQuery();
+        insertTaskQuery();
 	}
 
 
@@ -254,11 +257,11 @@ public class QueryRunner {
 	/**
 	 * Connect.
 	 *
-	 * @param szHost the sz host
-	 * @param szUser the sz user
-	 * @param szPass the sz pass
-	 * @param szDatabase the sz database
-	 * @return true, if successful
+	 * @param szHost the host
+	 * @param szUser the user
+	 * @param szPass the pass
+	 * @param szDatabase the database
+	 * @return true if connected successfully
 	 */
 	public boolean Connect(String szHost, String szUser, String szPass, String szDatabase) {
 		boolean bConnect = jdbcData.ConnectToDatabase(szHost, szUser, szPass, szDatabase);
@@ -270,7 +273,7 @@ public class QueryRunner {
 	/**
 	 * Disconnect.
 	 *
-	 * @return true, if successful
+	 * @return true if disconnected successfully
 	 */
 	public boolean Disconnect() {
 		boolean bConnect = jdbcData.CloseDatabase();
