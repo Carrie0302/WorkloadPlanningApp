@@ -16,7 +16,6 @@ import java.util.ArrayList;
  */
 public class QueryRunner {
 	
-	
 	/**
 	 * Experts Query
 	 * Shows employee names and the number of years of experience
@@ -25,14 +24,18 @@ public class QueryRunner {
 	 */
 	private void expertsQuery() {
 	   // queryArray[0]
-		queryArray.add(new QueryData("SELECT * FROM Employees_OverOneYearofExprience_bySkill"
+		queryArray.add(new QueryData(
+				"SELECT * FROM Employees_OverOneYearofExprience_bySkill"
 				, null, null, false, false)); 
 	   // queryArray[1]
-		queryArray.add(new QueryData("SELECT * FROM Employees_OverOneYearofExprience_bySkill "
-				+ "WHERE employee LIKE ?", new String[] { "Employee Name" }, new boolean[] { true }, 
+		queryArray.add(new QueryData(
+				" SELECT * FROM Employees_OverOneYearofExprience_bySkill "
+				+ " WHERE employee LIKE ?", new String[] { "Employee Name" },
+				new boolean[] { true }, 
 				false, true)); 
 	   // queryArray[2]
-		queryArray.add(new QueryData("SELECT * FROM Employees_OverOneYearofExprience_bySkill WHERE "
+		queryArray.add(new QueryData(
+				"SELECT * FROM Employees_OverOneYearofExprience_bySkill WHERE "
 				+ "skill_name LIKE ?", new String[] { "Skill Name" },
 				new boolean[] { true }, false, true));		
 	}
@@ -52,11 +55,12 @@ public class QueryRunner {
 	
 	
 	/**
-	 * Recent Skill Updates For Staff Working on ProjecqueryChoicets for a Manager
+	 * Recent Skill Updates For Staff Working for PM Query
 	 * Shows the most recent skill updates for each staff working on the
-	 * projects managed by certain project manager. Note: The query first identified the staff working on
-	 * tasks under deliverables that belong to each project managed by Aarika Paike. Then
-	 * the query determined the most recent skill acquired by each staff among their other
+	 * projects managed by certain project manager. Note: The query first
+	 * identified the staff working on tasks under deliverables that 
+	 * belong to each project managed by a PM. Then the query determines
+	 * the most recent skill acquired by each staff among their other
 	 * skills.
 	 */
 	private void recentSkillUpdatesebyPMQuery() {
@@ -203,12 +207,13 @@ public class QueryRunner {
 	}
 
 	/**
-	 * After the query has been run, all of the data has been captured into a
-	 * multi-dimensional string array which contains all the row's. For each row it
-	 * also has all the column data. It is in string format
+	 * After the query has been run, all of the data has been captured
+	 * into a multi-dimensional string array which contains all the 
+	 * row's. For each row it also has all the column data. It is 
+	 * in string format
 	 * 
-	 * @return multi-dimensional array of String data based on the resultset from
-	 *         the query
+	 * @return multi-dimensional array of String data based on the 
+	 * resultset from the query
 	 */
 	public String[][] GetQueryData() {
 		return jdbcData.GetData();
@@ -235,7 +240,8 @@ public class QueryRunner {
 	public boolean ExecuteQuery(int queryChoice, String[] parms) {
 		boolean bOK = true;
 		QueryData e = queryArray.get(queryChoice);
-		bOK = jdbcData.ExecuteQuery(e.GetQueryString(), parms, e.GetAllLikeParams());
+		bOK = jdbcData.ExecuteQuery(e.GetQueryString(), parms, 
+				e.GetAllLikeParams());
 		return bOK;
 	}
 
@@ -263,8 +269,10 @@ public class QueryRunner {
 	 * @param szDatabase the database
 	 * @return true if connected successfully
 	 */
-	public boolean Connect(String szHost, String szUser, String szPass, String szDatabase) {
-		boolean bConnect = jdbcData.ConnectToDatabase(szHost, szUser, szPass, szDatabase);
+	public boolean Connect(String szHost, String szUser, String szPass,
+			String szDatabase) {
+		boolean bConnect = jdbcData.ConnectToDatabase(szHost, szUser,
+				szPass, szDatabase);
 		if (bConnect == false)
 			error = jdbcData.GetError();
 		return bConnect;

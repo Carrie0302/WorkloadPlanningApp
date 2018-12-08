@@ -369,7 +369,6 @@ public class ManageUp extends JFrame {
 									String[] columnHeader) {
 		for (int i = 0; i < columnHeader.length; i++) {
 			TableColumn tc = table.getColumnModel().getColumn(i);
-			System.out.println(columnHeader[i]);
 			tc.setHeaderValue(columnHeader[i]);
 			DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
 			tc.setCellRenderer(dtcr);

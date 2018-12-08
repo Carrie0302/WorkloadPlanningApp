@@ -4,6 +4,7 @@
  * This is free and unencumbered software released into the public domain.
  */
 package queryrunner;
+
 import java.sql.Connection;
 import java.sql.*;
 import java.sql.DriverManager;
@@ -67,12 +68,13 @@ public class QueryJDBC {
 	/**
 	 * Execute query.
 	 *
-	 * @param szQuery the query
-	 * @param parms the parameters
+	 * @param szQuery   the query
+	 * @param parms     the parameters
 	 * @param likeparms the parameters using like
 	 * @return true if executed successfully
 	 */
-	public boolean ExecuteQuery(String szQuery, String[] parms, boolean[] likeparms) {
+	public boolean ExecuteQuery(String szQuery, String[] parms,
+			boolean[] likeparms) {
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		int nColAmt;
@@ -91,14 +93,13 @@ public class QueryJDBC {
 			resultSet = preparedStatement.executeQuery();
 			ResultSetMetaData rsmd = resultSet.getMetaData();
 			nColAmt = rsmd.getColumnCount();
-			
-			pullHeaders( rsmd, nColAmt );
-			pullData( resultSet, nColAmt );
-		
+
+			pullHeaders(rsmd, nColAmt);
+			pullData(resultSet, nColAmt);
+
 			preparedStatement.close();
 			resultSet.close();
-		}
-		catch (SQLException ex) {
+		} catch (SQLException ex) {
 			this.conError = "SQLException: " + ex.getMessage();
 			this.conError += "SQLState: " + ex.getSQLState();
 			this.conError += "VendorError: " + ex.getErrorCode();
@@ -111,19 +112,18 @@ public class QueryJDBC {
 		}
 		return true;
 	}
-	
-	
+
 	/**
 	 * Execute update.
 	 *
 	 * @param szQuery the query
-	 * @param parms the parameters
+	 * @param parms   the parameters
 	 * @return true if executed successfully
 	 */
 	public boolean ExecuteUpdate(String szQuery, String[] parms) {
 		PreparedStatement preparedStatement = null;
 		updateAmount = 0;
-		//Get the columns and the amount of columns
+		// Get the columns and the amount of columns
 		try {
 			preparedStatement = this.connection.prepareStatement(szQuery);
 			int nParamAmount = parms.length;
@@ -133,8 +133,7 @@ public class QueryJDBC {
 			}
 			updateAmount = preparedStatement.executeUpdate();
 			preparedStatement.close();
-		}
-		catch (SQLException ex) {
+		} catch (SQLException ex) {
 			this.conError = "SQLException: " + ex.getMessage();
 			this.conError += "SQLState: " + ex.getSQLState();
 			this.conError += "VendorError: " + ex.getErrorCode();
@@ -150,24 +149,27 @@ public class QueryJDBC {
 	/**
 	 * Connect to database.
 	 *
-	 * @param host the host
-	 * @param user the user
-	 * @param pass the pass
+	 * @param host     the host
+	 * @param user     the user
+	 * @param pass     the pass
 	 * @param database the database
 	 * @return true if connected to database successfully
 	 */
-	public boolean ConnectToDatabase(String host, String user, String pass, String database) {
+	public boolean ConnectToDatabase(String host, String user, String pass, 
+			String database) {
 		url = "jdbc:mysql://";
 		url += host;
 		url += ":3306/";
 		url += database;
-		url += "?useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+		url += "?useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode="
+				+ "false&serverTimezone=UTC";
 		try {
 			Class.forName(DB_DRV).newInstance();
 			connection = DriverManager.getConnection(url, user, pass);
 
 		} catch (SQLException ex) {
-			conError = "SQLException: " + ex.getMessage() + ex.getSQLState() + ex.getErrorCode();
+			conError = "SQLException: " + ex.getMessage() + ex.getSQLState()
+				+ ex.getErrorCode();
 			return false;
 		} catch (Exception ex) {
 			// handle the error
@@ -197,42 +199,42 @@ public class QueryJDBC {
 
 		return true;
 	}
-	
-	
+
 	/** The database drive. */
 	private static final String DB_DRV = "com.mysql.cj.jdbc.Driver";
-	
+
 	/** The connection error. */
 	private String conError = "";
-	
+
 	/** The url. */
 	private String url;
-	
+
 	/** The headers. */
 	private String[] headers;
-	
+
 	/** All rows from query results. */
 	private String[][] allRows;
-	
+
 	/** The update amount. */
 	private int updateAmount = 0;
 
-
 	/**
 	 * Populates the array with the queries data
+	 * 
 	 * @param resultSet SQL results
-	 * @param nColAmt column count in results
+	 * @param nColAmt   column count in results
 	 * @throws SQLException
 	 */
-	private void pullData(ResultSet resultSet, int nColAmt) throws SQLException {
-		//Get row count
+	private void pullData(ResultSet resultSet, int nColAmt) 
+			throws SQLException {
+		// Get row count
 		resultSet.last();
 		int amtRow = resultSet.getRow();
 		resultSet.beforeFirst();
-		
+
 		this.allRows = new String[amtRow][nColAmt];
-		
-		//Add data to array
+
+		// Add data to array
 		int nCurRow = 0;
 		while (resultSet.next()) {
 			for (int i = 0; i < nColAmt; i++) {
@@ -241,15 +243,17 @@ public class QueryJDBC {
 			nCurRow++;
 		}
 	}
-	
+
 	/**
 	 * Populates the array with column names from query
-	 * @param rsmd the meta data of the result set
+	 * 
+	 * @param rsmd    the meta data of the result set
 	 * @param nColAmt number of columns
 	 * @throws SQLException
 	 */
-	private void pullHeaders(ResultSetMetaData rsmd, int nColAmt) throws SQLException {
-		//Get headers
+	private void pullHeaders(ResultSetMetaData rsmd, int nColAmt) 
+			throws SQLException {
+		// Get headers
 		String colName = "";
 		headers = new String[nColAmt];
 		for (int i = 0; i < nColAmt; i++) {

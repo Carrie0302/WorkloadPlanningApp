@@ -23,7 +23,8 @@ public class QueryData {
 	 * @param isAction the is action
 	 * @param isParm the is parameters
 	 */
-	QueryData(String query, String[] parms, boolean[] likeparms, boolean isAction, boolean isParm) {
+	QueryData(String query, String[] parms, boolean[] likeparms, 
+			boolean isAction, boolean isParm) {
 		this.queryString = query;
 		this.arrayParms = parms;
 		this.arrayLikeParms = likeparms;
